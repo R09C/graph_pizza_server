@@ -17,6 +17,7 @@ import {UsersModule} from "../users/users.module";
 			inject:[ConfigService]
 		}),
 		UsersModule
-	]
+	],
+	exports: [JwtModule]
 })
 export class AuthModule {}
