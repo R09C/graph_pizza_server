@@ -10,10 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserModel {
+model UserSchema {
   id           Int            @id @default(autoincrement())
   email        String         @unique
   password     String
+  roles        RoleSchema[]   @relation("user_roles")
 
   @@map("users")
+}
+
+model RoleSchema {
+ id           Int            @id @default(autoincrement())
+ value        String         @unique
+ users        UserSchema[]   @relation("user_roles")
+
+ @@map("role")
 }
