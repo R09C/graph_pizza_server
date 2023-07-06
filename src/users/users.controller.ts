@@ -1,5 +1,5 @@
-import {Controller, Get} from '@nestjs/common';
-import {UsersService} from "./users.service";
+import { Controller, Get } from '@nestjs/common';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
@@ -7,6 +7,6 @@ export class UsersController {
 	}
     @Get()
 	async getUsers () {
-		return this.usersService.getAllUsers()
+		return this.usersService.getAllUsers();
 	}
 }

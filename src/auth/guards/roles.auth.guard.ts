@@ -1,12 +1,12 @@
 import {
 	Injectable,
 	CanActivate,
-	ExecutionContext, ForbiddenException, UnauthorizedException,
+	ExecutionContext, ForbiddenException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import {JwtService} from "@nestjs/jwt";
-import {ROLES_KEY} from "../../role/role.decorator";
-import {FORBIDDEN_UNAUTHORIZED_ERROR, UNAUTHORIZED_ERROR} from "../auth.constants";
+import { JwtService } from '@nestjs/jwt';
+import { ROLES_KEY } from '../../role/role.decorator';
+import { FORBIDDEN_UNAUTHORIZED_ERROR } from '../auth.constants';
 
 @Injectable()
 export class RolesAuthGuard implements CanActivate {
@@ -36,7 +36,7 @@ export class RolesAuthGuard implements CanActivate {
 			if(!authorized) throw new Error();
 			return true;
 		} catch (e) {
-			throw new ForbiddenException(FORBIDDEN_UNAUTHORIZED_ERROR)
+			throw new ForbiddenException(FORBIDDEN_UNAUTHORIZED_ERROR);
 		}
 	}
 }
