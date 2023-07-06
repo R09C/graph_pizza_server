@@ -1,24 +1,38 @@
-import { Injectable } from '@nestjs/common';
-import {PrismaService} from "../prisma/prisma.service";
-import {UsersCreateDto} from "./dtos/users-create.dto";
+import { Injectable } from "@nestjs/common";
+import { UsersRepository } from "./users.repository";
+import { UserEntity } from "./entity/user.entity";
+import { UserSchema } from '@prisma/client';
+import { IDisplayUser } from "./interface/DisplayUser.interface";
+import { UsersCreateDto } from "./dtos/users-create.dto";
+import { UsersUpdateDto } from "./dtos/users-update.dto";
+
+
 
 @Injectable()
-export class UsersService {
-	constructor(private readonly prismaService: PrismaService) {}
+export class UserService{
+	constructor(private readonly usersRepository:UsersRepository){}
 
-	async getAllUsers() {
-		return this.prismaService.userSchema.findMany({select: {id: true, email: true}});
+	async getAllUsers():Promise<UserSchema[]>{
+		return this.usersRepository.getAllUsers()
+	}
+	async findUserByEmail(email:string):Promise<IDisplayUser>{
+		const userInDB=await this.usersRepository.findUserByEmail(email);
+		const UserEn=new UserEntity(userInDB).getDisplayUser();
+		return UserEn
 	}
 
-	async findUserByEmail(email: string, needRoles = true) {
-		return this.prismaService.userSchema.findFirst({where: {email}, select: {id: true, email: true, roles: needRoles}});
+	async getFullUserInfo(id:number):Promise<IDisplayUser>{
+		const userInDB=await this.usersRepository.getFullUserInfo(id);
+		const UserEn=new UserEntity(userInDB).getDisplayUser();
+		return UserEn
 	}
 
-	async getFullUserInfo(email: string) {
-		return this.prismaService.userSchema.findFirst({where: {email}, include: {roles: {select: {role: true}}}});
-	}
+	async updateUser(dto:UsersUpdateDto):Promise<IDisplayUser>{
+		return this.usersRepository.updateUser(dto)
 
-	async createUser(dto: UsersCreateDto) {
-		return this.prismaService.userSchema.create({data: {...dto, roles: {create: {role: {connect:{value: 'USER'}}} }}, select: {id: true, email: true}});
 	}
+	
+
+
+
 }

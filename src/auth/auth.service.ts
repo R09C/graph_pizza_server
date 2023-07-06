@@ -1,6 +1,6 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {LoginDto} from "./dtos/login.dto";
-import {UsersService} from "../users/users.service";
+import {UsersService} from "../users/users.repository";
 import {JwtService} from "@nestjs/jwt";
 import {ALREADY_REGISTERED_ERROR, USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR} from "./auth.constants";
 import {RegisterDto} from "./dtos/register.dto";
