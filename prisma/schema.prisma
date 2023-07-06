@@ -36,3 +36,29 @@ model UserOnRolesSchema {
   @@id([userId, roleId])
   @@map("user_roles")
 }
+
+model PizzaSchema {
+ id           Int                        @id @default(autoincrement())
+ name         String
+ ingredients  PizzaOnIngredientsSchema[]
+
+ @@map("pizza")
+}
+
+model IngredientSchema {
+ id           Int                         @id @default(autoincrement())
+ name         String
+ pizzas       PizzaOnIngredientsSchema[]
+
+ @@map("ingredient")
+}
+
+model PizzaOnIngredientsSchema {
+ pizza         PizzaSchema         @relation(fields: [pizzaId], references: [id])
+ pizzaId       Int
+ ingredient    IngredientSchema    @relation(fields: [ingredientId], references: [id])
+ ingredientId  Int
+
+ @@id([pizzaId, ingredientId])
+ @@map("pizza_ingredients")
+}

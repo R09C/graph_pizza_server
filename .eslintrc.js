@@ -23,7 +23,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     "object-curly-spacing": [1, "always"],
     "max-len": [1, { "code": 110 }],
-    indent: [2, "tab"],
     quotes: [1, "single"],
     semi: [2, "always"],
 
