@@ -15,10 +15,10 @@ export class UsersService {
 	}
 
 	async getFullUserInfo(email: string) {
-		return this.prismaService.userSchema.findFirst({where: {email}, include: {roles: {select: {value: true}}}});
+		return this.prismaService.userSchema.findFirst({where: {email}, include: {roles: {select: {role: true}}}});
 	}
 
 	async createUser(dto: UsersCreateDto) {
-		return this.prismaService.userSchema.create({data: {...dto, roles: {connect: {value: "USER"}}}, select: {id: true, email: true}});
+		return this.prismaService.userSchema.create({data: {...dto, roles: {create: {role: {connect:{value: 'USER'}}} }}, select: {id: true, email: true}});
 	}
 }

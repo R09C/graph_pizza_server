@@ -14,7 +14,7 @@ model UserSchema {
   id           Int            @id @default(autoincrement())
   email        String         @unique
   password     String
-  roles        RoleSchema[]   @relation("user_roles")
+  roles        UserOnRolesSchema[]
 
   @@map("users")
 }
@@ -22,7 +22,17 @@ model UserSchema {
 model RoleSchema {
  id           Int            @id @default(autoincrement())
  value        String         @unique
- users        UserSchema[]   @relation("user_roles")
+ users        UserOnRolesSchema[]
 
  @@map("role")
+}
+
+model UserOnRolesSchema {
+  user       UserSchema     @relation(fields: [userId], references: [id])
+  userId     Int
+  role       RoleSchema     @relation(fields: [roleId], references: [id])
+  roleId     Int
+
+  @@id([userId, roleId])
+  @@map("user_roles")
 }

@@ -17,7 +17,7 @@ export class AuthService {
 		if(!existedUser) throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
 		const comparedPasswords = await compare(password, existedUser.password);
 		if(!comparedPasswords) throw new UnauthorizedException(WRONG_PASSWORD_ERROR);
-		return this.generateToken(existedUser);
+		return this.generateToken({id: existedUser.id, email: existedUser.email, roles: existedUser.roles.map((role => role.role.value))});
 	}
 
 	async register (registerDto: RegisterDto) {
