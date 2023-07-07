@@ -16,21 +16,16 @@ export class AuthService {
 	) {}
 
 	async login ({ email, password }: LoginDto) {
-		const existedUser = await this.usersService.getFullUserInfo(email);
+		const existedUser = await this.usersService.getUserByEmail(email);
 		if(!existedUser) throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
 		const comparedPasswords = await compare(password, existedUser.password);
 		if(!comparedPasswords) throw new UnauthorizedException(WRONG_PASSWORD_ERROR);
-		return this.generateToken(
-			{
-				id: existedUser.id, email:
-				existedUser.email,
-				roles: existedUser.roles.map((role => role.role.value))
-			}
-		);
+		const user = existedUser.getUserWithRoles();
+		return { token: await this.generateToken(user),  user };
 	}
 
 	async register (registerDto: RegisterDto) {
-		const existedUser = await this.usersService.findUserByEmail(registerDto.email);
+		const existedUser = await this.usersService.getUserByEmail(registerDto.email);
 		if(existedUser) throw new UnauthorizedException(ALREADY_REGISTERED_ERROR);
 		const salt = await genSalt(10);
 		const hashPassword = await hash(registerDto.password, salt);
