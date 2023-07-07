@@ -1,35 +1,32 @@
-import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "./users.repository";
-import { UserEntity } from "./entity/user.entity";
-import { UserSchema } from '@prisma/client';
-import { IDisplayUser } from "./interface/DisplayUser.interface";
-import { UsersCreateDto } from "./dtos/users-create.dto";
-import { UsersUpdateDto } from "./dtos/users-update.dto";
-
-
+import { Injectable } from '@nestjs/common';
+import { UsersCreateDto } from './dtos/users-create.dto';
+import { UsersRepository } from './users.repository';
+import { UserEntity } from '../entities/user.entity';
+import { IDisplayUser } from './interfaces/display-user.interface';
 
 @Injectable()
-export class UserService{
-	constructor(private readonly usersRepository:UsersRepository){}
+export class UsersService {
+	constructor(private readonly usersRepository: UsersRepository) {}
 
-	async getAllUsers():Promise<UserSchema[]>{
-		return this.usersRepository.getAllUsers()
-	}
-	async findUserByEmail(email:string):Promise<IDisplayUser>{
-		const userInDB=await this.usersRepository.findUserByEmail(email);
-		const UserEn=new UserEntity(userInDB).getDisplayUser();
-		return UserEn
+	async getAllUsers() {
+		return await this.usersRepository.getAllUsers();
 	}
 
-	async getFullUserInfo(id:number):Promise<IDisplayUser>{
-		const userInDB=await this.usersRepository.getFullUserInfo(id);
-		const UserEn=new UserEntity(userInDB).getDisplayUser();
-		return UserEn
+	async getUserByEmail(email: string): Promise<UserEntity | null> {
+		const user = await this.usersRepository.getUserByEmail(email);
+		if(!user) return null;
+		return new UserEntity(user);
 	}
 
-	async updateUser(dto:UsersUpdateDto):Promise<IDisplayUser>{
-		return this.usersRepository.updateUser(dto)
+	async getUserById(id: number): Promise<UserEntity | null> {
+		const user = await this.usersRepository.getUserById(id);
+		if(!user) return null;
+		return new UserEntity(user);
+	}
 
+	async createUser(dto: UsersCreateDto): Promise<IDisplayUser> {
+		const user = await this.usersRepository.createUser(dto);
+		return new UserEntity(user).getDisplayUser();
 	}
 	
 

@@ -21,7 +21,10 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    indent: [1, "tab"],
+    "object-curly-spacing": [1, "always"],
+    "max-len": [1, { "code": 110 }],
+    quotes: [1, "single"],
+    semi: [2, "always"],
 
   },
 };

@@ -36,3 +36,39 @@ model UserOnRolesSchema {
   @@id([userId, roleId])
   @@map("user_roles")
 }
+
+model ProductSchema {
+ id           Int                        @id @default(autoincrement())
+ name         String                     @unique
+ ingredients  ProductOnIngredientsSchema[]
+ category     CategorySchema             @relation(fields: [categoryId], references: [id])
+ categoryId   Int
+
+ @@map("product")
+}
+
+model CategorySchema {
+  id           Int                        @id @default(autoincrement())
+  name         String                     @unique
+  product      ProductSchema[]
+
+  @@map("product_category")
+}
+
+model IngredientSchema {
+ id           Int                          @id @default(autoincrement())
+ name         String                       @unique
+ products     ProductOnIngredientsSchema[]
+
+ @@map("ingredient")
+}
+
+model ProductOnIngredientsSchema {
+ product         ProductSchema         @relation(fields: [productId], references: [id])
+ productId       Int
+ ingredient      IngredientSchema    @relation(fields: [ingredientId], references: [id])
+ ingredientId    Int
+
+ @@id([productId, ingredientId])
+ @@map("product_ingredients")
+}
