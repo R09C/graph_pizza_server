@@ -5,7 +5,6 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
-import { PizzaModule } from './pizza/pizza.module';
 
 @Module({
 	imports: [
@@ -16,7 +15,6 @@ import { PizzaModule } from './pizza/pizza.module';
 		UsersModule,
 		AuthModule,
 		RoleModule,
-		PizzaModule,
 	],
 	controllers: [],
 	providers: [ PrismaService],

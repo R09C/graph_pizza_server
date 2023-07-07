@@ -37,28 +37,38 @@ model UserOnRolesSchema {
   @@map("user_roles")
 }
 
-model PizzaSchema {
+model ProductSchema {
  id           Int                        @id @default(autoincrement())
- name         String
- ingredients  PizzaOnIngredientsSchema[]
+ name         String                     @unique
+ ingredients  ProductOnIngredientsSchema[]
+ category     CategorySchema             @relation(fields: [categoryId], references: [id])
+ categoryId   Int
 
- @@map("pizza")
+ @@map("product")
+}
+
+model CategorySchema {
+  id           Int                        @id @default(autoincrement())
+  name         String                     @unique
+  product      ProductSchema[]
+
+  @@map("product_category")
 }
 
 model IngredientSchema {
- id           Int                         @id @default(autoincrement())
- name         String
- pizzas       PizzaOnIngredientsSchema[]
+ id           Int                          @id @default(autoincrement())
+ name         String                       @unique
+ products     ProductOnIngredientsSchema[]
 
  @@map("ingredient")
 }
 
-model PizzaOnIngredientsSchema {
- pizza         PizzaSchema         @relation(fields: [pizzaId], references: [id])
- pizzaId       Int
- ingredient    IngredientSchema    @relation(fields: [ingredientId], references: [id])
- ingredientId  Int
+model ProductOnIngredientsSchema {
+ product         ProductSchema         @relation(fields: [productId], references: [id])
+ productId       Int
+ ingredient      IngredientSchema    @relation(fields: [ingredientId], references: [id])
+ ingredientId    Int
 
- @@id([pizzaId, ingredientId])
- @@map("pizza_ingredients")
+ @@id([productId, ingredientId])
+ @@map("product_ingredients")
 }
