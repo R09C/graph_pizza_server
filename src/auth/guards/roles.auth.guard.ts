@@ -27,9 +27,7 @@ export class RolesAuthGuard implements CanActivate {
 
 		try {
 			const authHeader = req.headers.authorization;
-			const bearer = authHeader.split(' ')[0];
-			const token = authHeader.split(' ')[1];
-
+			const [bearer,token]=authHeader.split(' ');
 			const user = await this.jwtService.verifyAsync(token);
 			req.user = user;
 			const authorized = user.roles.some((role) => requiredRoles.includes(role));
