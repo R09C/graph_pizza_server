@@ -36,14 +36,11 @@ export class CategoryRepository{
 		});
 	}
 
-	async updateCategory({id,...dto}:СategoryUpdateDto):Promise<CategorySchema>{
-		return this.prismaService.categorySchema.update({
+	async deleteCategory(id:number):Promise<CategorySchema>{
+		return this.prismaService.categorySchema.delete({
 			where:{
 				id
 			},
-			data:{
-				...dto,
-			}
 		})
 	}
 }

@@ -10,7 +10,7 @@ export class CategoryEntity{
 
 	constructor({id,name,products}:CategorySchema & {products?:{name:ProductSchema}[]}){
 		this._id=id;
-		this._name=name;
+		this._name=name; 
 		this._product=products?.map(product=>product.name.name)||[];
 	}
 	

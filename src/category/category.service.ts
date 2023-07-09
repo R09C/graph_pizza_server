@@ -25,8 +25,8 @@ export class CategoryService{
 		return new CategoryEntity(craeteCategory).getDisplayCategory()
 	}
 
-	async updateCategory(dto:СategoryUpdateDto):Promise<IDisplayCategory>{
-		const categoryInDB=await this.categoryRepository.updateCategory(dto);
+	async deleteCategory(id:number):Promise<IDisplayCategory>{
+		const categoryInDB=await this.categoryRepository.deleteCategory(id);
 		if(!categoryInDB) return null;
 		return new CategoryEntity(categoryInDB).getDisplayCategory()
 		
