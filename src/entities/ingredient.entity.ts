@@ -1,4 +1,4 @@
-import { IngredientSchema,ProductSchema } from '@prisma/client';
+import { IngredientSchema } from '@prisma/client';
 import { getDisplayIngredient } from 'src/ingredient/interface/ingredient.entity.enterface';
 
 export class IngredientEntity{
@@ -6,10 +6,9 @@ export class IngredientEntity{
 	private readonly _name:string;
 	private readonly _products:string[];
 
-	constructor({id,name,products}:IngredientSchema&{products?:{product:ProductSchema}[]}){
+	constructor({ id,name }:IngredientSchema){
 		this._id=id;
 		this._name=name;
-		this._products=products?.map(product=>product.product.name)||[];
 	}
 
 	get id():number{
@@ -20,14 +19,10 @@ export class IngredientEntity{
 		return this._name;
 	}
 
-	get products():string[]{
-		return this._products;
-	}
-
 	getDisplayIngredient():getDisplayIngredient{
 		return {
-			id:this._id,
-			name:this._name
-		}
+			id: this._id,
+			name: this._name
+		};
 	}
 }
