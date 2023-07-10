@@ -1,32 +1,33 @@
 import { IngredientSchema } from '@prisma/client';
-import { Injectable } from '@nestjs/common';
-import { IngredientcreatDto } from "./dto/ingredient.creat.dto";
-import { IngredientRepository } from "./ingredient.repository";
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { IngredientcreatDto } from './dto/ingredient.creat.dto';
+import { IngredientRepository } from './ingredient.repository';
 import { IngredientEntity } from 'src/entities/ingredient.entity';
-import { getDisplayIngredient } from './interface/ingredient.entity.enterface';
+import { CREATE_ERROR, DELETE_ERROR, NOT_FOUND_ERROR } from '../common/crud.constants';
 
 @Injectable()
 export class IngredientService{
-	constructor(private readonly ingredientRepository:IngredientRepository){}
+	constructor(private readonly ingredientRepository:IngredientRepository) {}
 
-	async getAllIngredient():Promise<IngredientSchema[]>{
-		return this.ingredientRepository.getAllIngredient();
+	async getAllIngredients(): Promise<IngredientSchema[]> {
+		return this.ingredientRepository.getAllIngredients();
 	}
 
-	async getAllIngredientById(ingredientId:number):Promise<IngredientEntity>{
-		const ingredientInDB= await this.ingredientRepository.getAllIngredientById(ingredientId);
-		return new IngredientEntity(ingredientInDB);
-		
+	async getIngredientById (ingredientId:number): Promise<IngredientEntity | null> {
+		const ingredient = await this.ingredientRepository.getIngredientById(ingredientId);
+		if(!ingredient) throw new NotFoundException(NOT_FOUND_ERROR);
+		return ingredient.getDisplayIngredient();
 	}
 
-	async creatIngredient(dto:IngredientcreatDto):Promise<getDisplayIngredient>{
-		const creatIngredient= await this.ingredientRepository.creatIngredient(dto);	
-		return new IngredientEntity(creatIngredient).getDisplayIngredient();
+	async createIngredient(dto:IngredientcreatDto): Promise<IngredientEntity | null> {
+		const ingredient = await this.ingredientRepository.createIngredient(dto);
+		if(!ingredient) throw new BadRequestException(CREATE_ERROR);
+		return ingredient.getDisplayIngredient();
 	}
 
-	async deleteIngredient(id:number):Promise<IngredientSchema>{
-		const deleteIngredient= await this.ingredientRepository.deleteIngredient(id);
-		if(!deleteIngredient) null;
-		return new IngredientEntity(deleteIngredient);
+	async deleteIngredient(id:number): Promise<IngredientEntity | null> {
+		const ingredient = await this.ingredientRepository.deleteIngredient(id);
+		if(!ingredient) throw new BadRequestException(DELETE_ERROR);
+		return ingredient.getDisplayIngredient();
 	}
 }

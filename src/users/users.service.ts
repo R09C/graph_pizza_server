@@ -28,8 +28,5 @@ export class UsersService {
 		const user = await this.usersRepository.createUser(dto);
 		return new UserEntity(user).getDisplayUser();
 	}
-	
-
-
 
 }

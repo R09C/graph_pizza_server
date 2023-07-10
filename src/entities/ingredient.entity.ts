@@ -1,10 +1,9 @@
 import { IngredientSchema } from '@prisma/client';
-import { getDisplayIngredient } from 'src/ingredient/interface/ingredient.entity.enterface';
+import { getDisplayIngredient } from 'src/ingredient/interfaces/display-ingredient.interface';
 
 export class IngredientEntity{
 	private readonly _id:number;
 	private readonly _name:string;
-	private readonly _products:string[];
 
 	constructor({ id,name }:IngredientSchema){
 		this._id=id;

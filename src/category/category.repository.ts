@@ -31,7 +31,7 @@ export class CategoryRepository{
 		return new CategoryEntity(category);
 	}
 
-	async deleteCategory(id: number): Promise<CategoryEntity | null> {
+	async deleteCategory (id: number): Promise<CategoryEntity | null> {
 		const category = await this.prismaService.categorySchema.delete({
 			where:{
 				id

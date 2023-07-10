@@ -17,9 +17,9 @@ export class CategoryController {
 		return this.categoryService.getCategoryById(id);
 	}
 
-    @Post()
-	async CreateCategory(@Body() categoryCreateDto: CategoryCreateDto) {
-		return this.categoryService.createCategory(categoryCreateDto);
+    @Post('create')
+	async CreateCategory(@Body() dto: CategoryCreateDto) {
+		return this.categoryService.createCategory(dto);
 	}
 
     @Delete(':id')
