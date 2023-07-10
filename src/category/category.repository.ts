@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CategorySchema } from '@prisma/client';
 import { CategoryEntity } from '../entities/category.entity';
 import { CategoryCreateDto } from './dtos/category-create.dto';

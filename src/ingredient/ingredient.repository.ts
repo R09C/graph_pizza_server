@@ -1,4 +1,4 @@
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { IngredientSchema } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { IngredientCreateDto } from './dtos/ingredient-create.dto';

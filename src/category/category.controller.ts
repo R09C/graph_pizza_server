@@ -1,29 +1,45 @@
-import { Controller, Get, Param, Body, Post, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post, Delete, ParseIntPipe, HttpException, HttpStatus } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CategoryCreateDto } from './dtos/category-create.dto';
-
+import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';
 
 @Controller('categories')
 export class CategoryController {
-	constructor(private readonly categoryService:CategoryService) {}
+	constructor(private readonly categoryService: CategoryService) {}
 
-    @Get()
-	async getAllCategory () {
-		return this.categoryService.getAllCategories();
+	@Get()
+	async getAllCategory() {
+		try {
+			return await this.categoryService.getAllCategories();
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-    @Get(':id')
+	@Get(':id')
 	async getCategory(@Param('id', ParseIntPipe) id: number) {
-		return this.categoryService.getCategoryById(id);
+		try {
+			return await this.categoryService.getCategoryById(id);
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-    @Post('create')
-	async CreateCategory(@Body() dto: CategoryCreateDto) {
-		return this.categoryService.createCategory(dto);
+	@Post('create')
+	async createCategory(@Body() dto: CategoryCreateDto) {
+		try {
+			return await this.categoryService.createCategory(dto);
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-    @Delete(':id')
-	async UpdateCategory(@Param('id', ParseIntPipe) id: number) {
-		return this.categoryService.deleteCategory(id);
+	@Delete(':id')
+	async deleteCategory(@Param('id', ParseIntPipe) id: number) {
+		try {
+			return await this.categoryService.deleteCategory(id);
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
