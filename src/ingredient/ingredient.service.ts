@@ -1,6 +1,6 @@
 import { IngredientSchema } from '@prisma/client';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { IngredientcreatDto } from './dto/ingredient.creat.dto';
+import { IngredientCreateDto } from './dtos/ingredient-create.dto';
 import { IngredientRepository } from './ingredient.repository';
 import { IngredientEntity } from 'src/entities/ingredient.entity';
 import { CREATE_ERROR, DELETE_ERROR, NOT_FOUND_ERROR } from '../common/crud.constants';
@@ -19,7 +19,7 @@ export class IngredientService{
 		return ingredient.getDisplayIngredient();
 	}
 
-	async createIngredient(dto:IngredientcreatDto): Promise<IngredientEntity | null> {
+	async createIngredient(dto:IngredientCreateDto): Promise<IngredientEntity | null> {
 		const ingredient = await this.ingredientRepository.createIngredient(dto);
 		if(!ingredient) throw new BadRequestException(CREATE_ERROR);
 		return ingredient.getDisplayIngredient();

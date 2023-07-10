@@ -1,6 +1,6 @@
 import { CategoryRepository } from './category.repository';
 import { CategorySchema } from '@prisma/client';
-import { CategoryCreateDto } from './dto/category-create.dto';
+import { CategoryCreateDto } from './dtos/category-create.dto';
 import { IDisplayCategory } from './interfaces/display-category.interface';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { CREATE_ERROR, DELETE_ERROR, NOT_FOUND_ERROR } from '../common/crud.constants';

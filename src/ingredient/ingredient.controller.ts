@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Body, Post, Delete, ParseIntPipe } from '@nestjs/common';
 import { IngredientService } from './ingredient.service';
-import { IngredientcreatDto } from './dto/ingredient.creat.dto';
+import { IngredientCreateDto } from './dtos/ingredient-create.dto';
 
 
 @Controller('ingredients')
@@ -18,7 +18,7 @@ export class IngredientController{
 	}
 
 	@Post('create')
-	async creatIngredient( @Body() dto:IngredientcreatDto ) {
+	async creatIngredient( @Body() dto:IngredientCreateDto ) {
 		return this.ingredientService.createIngredient(dto);
 	}
 

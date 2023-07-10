@@ -1,7 +1,7 @@
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CategorySchema } from '@prisma/client';
 import { CategoryEntity } from '../entities/category.entity';
-import { CategoryCreateDto } from './dto/category-create.dto';
+import { CategoryCreateDto } from './dtos/category-create.dto';
 
 export class CategoryRepository{
 	constructor(private readonly prismaService:PrismaService ){}
