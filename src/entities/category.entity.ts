@@ -1,5 +1,6 @@
 import { CategorySchema } from '@prisma/client';
-import { IDisplayCategory } from 'src/category/interfaces/display-category.interface.ts';
+import { IDisplayCategory } from 'src/category/interfaces/display-category.interface';
+
 
 export class CategoryEntity{
 	private readonly _id:number;

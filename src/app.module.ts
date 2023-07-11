@@ -5,6 +5,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
+import { IngredientModule } from './ingredient/ingredient.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
 	imports: [
@@ -15,8 +17,10 @@ import { RoleModule } from './role/role.module';
 		UsersModule,
 		AuthModule,
 		RoleModule,
+		IngredientModule,
+		CategoryModule,
 	],
 	controllers: [],
-	providers: [ PrismaService],
+	providers: [PrismaService],
 })
 export class AppModule { }
