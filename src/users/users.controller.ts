@@ -17,8 +17,8 @@ export class UsersController {
 		}
 	}
 
-	@Get(':email')
-	async getUserByEmail(@Param('email', ParseStringPipe) email: string) {
+	@Get('email/:email')
+	async getUserByEmail(@Param("email") email: string) {
 		try {
 			return await this.usersService.getUserByEmail(email);
 		} catch (error) {
@@ -26,7 +26,7 @@ export class UsersController {
 		}
 	}
 
-	@Get(':id')
+	@Get('id/:id')
 	async getUserById(@Param('id', ParseIntPipe) id: number) {
 		try {
 			return await this.usersService.getUserById(id);
