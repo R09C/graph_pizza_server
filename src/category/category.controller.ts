@@ -22,6 +22,7 @@ export class CategoryController {
 		try {
 			return await this.categoryService.getAllCategories();
 		} catch (error) {
+			console.log(error);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -40,6 +41,7 @@ export class CategoryController {
 		try {
 			return await this.categoryService.createCategory(dto);
 		} catch (error) {
+			console.log(error);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

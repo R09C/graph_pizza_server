@@ -1,7 +1,8 @@
 import { CategorySchema } from '@prisma/client';
 import { IDisplayCategory } from 'src/category/interfaces/display-category.interface';
+import { IBaseEntity } from '../common/base.entity.interface';
 
-export class CategoryEntity {
+export class CategoryEntity implements IBaseEntity {
 	private readonly _id: number;
 	private readonly _name: string;
 
@@ -18,7 +19,7 @@ export class CategoryEntity {
 		return this._name;
 	}
 
-	getDisplayCategory(): IDisplayCategory {
+	getDisplay(): IDisplayCategory {
 		return {
 			id: this._id,
 			name: this._name,

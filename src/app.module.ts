@@ -21,6 +21,6 @@ import { CategoryModule } from './category/category.module';
 		CategoryModule,
 	],
 	controllers: [],
-	providers: [PrismaService],
+	providers: [],
 })
 export class AppModule {}

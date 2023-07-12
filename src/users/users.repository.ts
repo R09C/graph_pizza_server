@@ -13,7 +13,6 @@ export class UsersRepository {
 			select: {
 				id: true,
 				email: true,
-				roles: true,
 			},
 		});
 	}

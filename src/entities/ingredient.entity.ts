@@ -1,7 +1,8 @@
 import { IngredientSchema } from '@prisma/client';
 import { IDisplayIngredient } from 'src/ingredient/interfaces/display-ingredient.interface';
+import { IBaseEntity } from '../common/base.entity.interface';
 
-export class IngredientEntity {
+export class IngredientEntity implements IBaseEntity {
 	private readonly _id: number;
 	private readonly _name: string;
 
@@ -18,7 +19,7 @@ export class IngredientEntity {
 		return this._name;
 	}
 
-	getDisplayIngredient(): IDisplayIngredient {
+	getDisplay(): IDisplayIngredient {
 		return {
 			id: this._id,
 			name: this._name,

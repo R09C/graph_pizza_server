@@ -3,7 +3,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { IngredientCreateDto } from './dtos/ingredient-create.dto';
 import { IngredientRepository } from './ingredient.repository';
 import { CREATE_ERROR, DELETE_ERROR, NOT_FOUND_ERROR } from '../common/crud.constants';
-import { IDisplayCategory } from 'src/category/interfaces/display-category.interface';
+import { IngredientEntity } from '../entities/ingredient.entity';
 
 @Injectable()
 export class IngredientService {
@@ -13,21 +13,15 @@ export class IngredientService {
 		return this.ingredientRepository.getAllIngredients();
 	}
 
-	async getIngredientById(ingredientId: number): Promise<IDisplayCategory | null> {
-		const ingredient = await this.ingredientRepository.getIngredientById(ingredientId);
-		if (!ingredient) throw new NotFoundException(NOT_FOUND_ERROR);
-		return ingredient.getDisplayIngredient();
+	async getIngredientById(ingredientId: number): Promise<IngredientEntity | null> {
+		return this.ingredientRepository.getIngredientById(ingredientId);
 	}
 
-	async createIngredient(dto: IngredientCreateDto): Promise<IDisplayCategory | null> {
-		const ingredient = await this.ingredientRepository.createIngredient(dto);
-		if (!ingredient) throw new BadRequestException(CREATE_ERROR);
-		return ingredient.getDisplayIngredient();
+	async createIngredient(dto: IngredientCreateDto): Promise<IngredientEntity | null> {
+		return this.ingredientRepository.createIngredient(dto);
 	}
 
-	async deleteIngredient(id: number): Promise<IDisplayCategory | null> {
-		const ingredient = await this.ingredientRepository.deleteIngredient(id);
-		if (!ingredient) throw new BadRequestException(DELETE_ERROR);
-		return ingredient.getDisplayIngredient();
+	async deleteIngredient(id: number): Promise<IngredientEntity | null> {
+		return this.ingredientRepository.deleteIngredient(id);
 	}
 }

@@ -3,12 +3,13 @@ import { UsersCreateDto } from './dtos/users-create.dto';
 import { UsersRepository } from './users.repository';
 import { UserEntity } from '../entities/user.entity';
 import { IDisplayUser } from './interfaces/display-user.interface';
+import { UserSchema } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
 	constructor(private readonly usersRepository: UsersRepository) {}
 
-	async getAllUsers() {
+	async getAllUsers(): Promise<Omit<UserSchema, 'password'>[]> {
 		return await this.usersRepository.getAllUsers();
 	}
 
@@ -26,6 +27,6 @@ export class UsersService {
 
 	async createUser(dto: UsersCreateDto): Promise<IDisplayUser> {
 		const user = await this.usersRepository.createUser(dto);
-		return new UserEntity(user).getDisplayUser();
+		return new UserEntity(user);
 	}
 }
