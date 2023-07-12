@@ -14,7 +14,6 @@ export class AuthController {
 		try {
 			return await this.authService.login(loginDto);
 		} catch (error) {
-			console.log(error)
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -24,7 +23,6 @@ export class AuthController {
 		try {
 			return await this.authService.register(registerDto);
 		} catch (error) {
-			console.log(error);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

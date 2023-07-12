@@ -18,18 +18,18 @@ export class UsersController {
 	}
 
 	@Get('email/:email')
-	async getUserByEmail(@Param("email") email: string) {
+	async getUserByEmail(@Param('email') email: string) {
 		try {
-			return await this.usersService.getUserByEmail(email);
+			return (await this.usersService.getUserByEmail(email)).getDisplayUser();
 		} catch (error) {
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@Get('id/:id')
+	@Get(':id')
 	async getUserById(@Param('id', ParseIntPipe) id: number) {
 		try {
-			return await this.usersService.getUserById(id);
+			return (await this.usersService.getUserById(id)).getDisplayUser();
 		} catch (error) {
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

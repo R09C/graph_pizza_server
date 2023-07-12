@@ -21,7 +21,7 @@ export class AuthService {
 		const comparedPasswords = await compare(password, existedUser.password);
 		if(!comparedPasswords) throw new UnauthorizedException(WRONG_PASSWORD_ERROR);
 		const user = existedUser.getUserWithRoles();
-		const token=await this.generateToken(user)
+		const token = await this.generateToken(user);
 		return { token ,  user };
 	}
 

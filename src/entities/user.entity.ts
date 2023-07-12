@@ -32,10 +32,12 @@ export class UserEntity {
     }
 
     getDisplayUser (): IDisplayUser {
-        return {
+        const user = {
             id: this._id,
             email: this._email,
         };
+        console.log(user);
+        return user;
     }
 
     getUserWithRoles (): IUserWithRoles {
@@ -45,5 +47,4 @@ export class UserEntity {
             roles: this._roles
         };
     }
-
 }
