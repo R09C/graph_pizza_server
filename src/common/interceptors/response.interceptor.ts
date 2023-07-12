@@ -38,6 +38,10 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
 				}
 				return data?.getDisplay ? data.getDisplay() : data;
 			}),
+
+			catchError((error) => {
+				return throwError(error);
+			}),
 		);
 	}
 }
