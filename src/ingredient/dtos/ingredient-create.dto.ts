@@ -1,3 +1,3 @@
 export class IngredientCreateDto {
-	name:string;
+	name: string;
 }

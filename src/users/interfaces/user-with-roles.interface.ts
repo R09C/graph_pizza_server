@@ -1,6 +1,5 @@
 import { IDisplayUser } from './display-user.interface';
 
-
-export interface IUserWithRoles extends IDisplayUser{
-    roles: string[];
+export interface IUserWithRoles extends IDisplayUser {
+	roles: string[];
 }

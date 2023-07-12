@@ -14,13 +14,13 @@ export class UsersService {
 
 	async getUserByEmail(email: string): Promise<UserEntity | null> {
 		const user = await this.usersRepository.getUserByEmail(email);
-		if(!user) return null;
+		if (!user) return null;
 		return new UserEntity(user);
 	}
 
 	async getUserById(id: number): Promise<UserEntity | null> {
 		const user = await this.usersRepository.getUserById(id);
-		if(!user) return null;
+		if (!user) return null;
 		return new UserEntity(user);
 	}
 
@@ -28,5 +28,4 @@ export class UsersService {
 		const user = await this.usersRepository.createUser(dto);
 		return new UserEntity(user).getDisplayUser();
 	}
-
 }

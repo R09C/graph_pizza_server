@@ -4,11 +4,10 @@ import { CategoryRepository } from './category.repository';
 import { CategoryService } from './category.service';
 import { CategoryController } from './category.controller';
 
-
 @Module({
 	controllers: [CategoryController],
 	providers: [CategoryService, CategoryRepository],
 	imports: [PrismaModule],
-	exports: [CategoryService]
+	exports: [CategoryService],
 })
 export class CategoryModule {}

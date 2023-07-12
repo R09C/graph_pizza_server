@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Body, Post, Delete, ParseIntPipe, HttpException, HttpStatus } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Param,
+	Body,
+	Post,
+	Delete,
+	ParseIntPipe,
+	HttpException,
+	HttpStatus,
+} from '@nestjs/common';
 import { IngredientService } from './ingredient.service';
 import { IngredientCreateDto } from './dtos/ingredient-create.dto';
 import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';

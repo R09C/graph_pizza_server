@@ -1,4 +1,4 @@
-export interface IDisplayIngredient{
-	id:number;
-	name:string;
+export interface IDisplayIngredient {
+	id: number;
+	name: string;
 }

@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 
-
 export class RegisterDto {
 	@IsEmail()
 	@IsNotEmpty()

@@ -1,9 +1,8 @@
-import { Body, Controller, Post,HttpException,HttpStatus } from '@nestjs/common';
+import { Body, Controller, Post, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { RegisterDto } from './dtos/register.dto';
 import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';
-
 
 @Controller('auth')
 export class AuthController {

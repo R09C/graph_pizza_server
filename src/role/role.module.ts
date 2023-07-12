@@ -7,6 +7,6 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
 	controllers: [RoleController],
 	providers: [RoleService],
-	imports: [PrismaModule, AuthModule]
+	imports: [PrismaModule, AuthModule],
 })
 export class RoleModule {}

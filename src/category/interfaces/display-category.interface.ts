@@ -1,4 +1,4 @@
-export interface IDisplayCategory{
+export interface IDisplayCategory {
 	id: number;
 	name: string;
 }

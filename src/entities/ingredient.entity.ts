@@ -1,27 +1,27 @@
 import { IngredientSchema } from '@prisma/client';
 import { IDisplayIngredient } from 'src/ingredient/interfaces/display-ingredient.interface';
 
-export class IngredientEntity{
-	private readonly _id:number;
-	private readonly _name:string;
+export class IngredientEntity {
+	private readonly _id: number;
+	private readonly _name: string;
 
-	constructor({ id,name }:IngredientSchema){
-		this._id=id;
-		this._name=name;
+	constructor({ id, name }: IngredientSchema) {
+		this._id = id;
+		this._name = name;
 	}
 
-	get id():number{
+	get id(): number {
 		return this._id;
 	}
 
-	get name():string{
+	get name(): string {
 		return this._name;
 	}
 
-	getDisplayIngredient():IDisplayIngredient{
+	getDisplayIngredient(): IDisplayIngredient {
 		return {
 			id: this._id,
-			name: this._name
+			name: this._name,
 		};
 	}
 }

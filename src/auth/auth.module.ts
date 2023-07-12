@@ -11,13 +11,13 @@ import { UsersModule } from '../users/users.module';
 	imports: [
 		JwtModule.registerAsync({
 			imports: [ConfigModule],
-			useFactory: async (configService: ConfigService) =>( {
-				secret: configService.get<string>('SECRET_JWT_KEY')
+			useFactory: async (configService: ConfigService) => ({
+				secret: configService.get<string>('SECRET_JWT_KEY'),
 			}),
-			inject:[ConfigService]
+			inject: [ConfigService],
 		}),
-		UsersModule
+		UsersModule,
 	],
-	exports: [JwtModule]
+	exports: [JwtModule],
 })
 export class AuthModule {}

@@ -4,17 +4,15 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { RegisterDto } from '../src/auth/dtos/register.dto';
 import { LoginDto } from '../src/auth/dtos/login.dto';
-import exp from 'constants';
-
 
 const testRegisterDto: RegisterDto = {
 	email: 'graph@graph.com',
-	password: 'graph'
+	password: 'graph',
 };
 
 const testLoginDto: LoginDto = {
 	email: 'graph@graph.com',
-	password: 'graph'
+	password: 'graph',
 };
 
 describe('AppController (e2e)', () => {
@@ -31,7 +29,9 @@ describe('AppController (e2e)', () => {
 	});
 
 	it('/auth/register (POST) - success', async () => {
-		const { body } = await request(app.getHttpServer()).post('/auth/register').send(testRegisterDto);
+		const { body } = await request(app.getHttpServer())
+			.post('/auth/register')
+			.send(testRegisterDto);
 		userId = body.id;
 		expect(body.email).toBe(testRegisterDto.email);
 		expect(body.password).not.toBe(testRegisterDto.password);
@@ -43,5 +43,4 @@ describe('AppController (e2e)', () => {
 		expect(body.user.id).toBe(userId);
 		expect(body.token).toBeDefined();
 	});
-
 });

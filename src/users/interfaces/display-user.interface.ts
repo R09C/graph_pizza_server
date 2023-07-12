@@ -1,6 +1,4 @@
-
-
 export interface IDisplayUser {
-    id: number;
-    email: string;
+	id: number;
+	email: string;
 }

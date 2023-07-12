@@ -7,8 +7,7 @@ import { AddRoleDto } from './dtos/add-role.dto';
 
 @Controller('role')
 export class RoleController {
-	constructor(private readonly roleService: RoleService) {
-	}
+	constructor(private readonly roleService: RoleService) {}
 
 	@Roles('ADMIN')
 	@UseGuards(RolesAuthGuard)
@@ -20,7 +19,7 @@ export class RoleController {
 	@Roles('ADMIN')
 	@UseGuards(RolesAuthGuard)
 	@Post('create')
-	async createRole (@Body() createRoleDto: CreateRoleDto) {
+	async createRole(@Body() createRoleDto: CreateRoleDto) {
 		return this.roleService.createRole(createRoleDto);
 	}
 }
