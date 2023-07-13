@@ -6,9 +6,9 @@ import { IngredientCreateDto } from '../src/ingredient/dtos/ingredient-create.dt
 
 const id = 1;
 
-const testIngredientCreate:IngredientCreateDto={
-	name:"test1111"
-}
+const testIngredientCreate: IngredientCreateDto = {
+	name: 'test1111',
+};
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
@@ -24,34 +24,31 @@ describe('AppController (e2e)', () => {
 	});
 
 	it('/ingredients/ (GET)', async () => {
-		const {body}=await request(app.getHttpServer())
-			.get('/ingredients/')
+		const { body } = await request(app.getHttpServer()).get('/ingredients/');
 		expect(200);
 		expect(Array.isArray(body)).toBe(true);
 	});
 
 	it('/ingredients/create/ (POST)', async () => {
-		const {body}=await request(app.getHttpServer())
+		const { body } = await request(app.getHttpServer())
 			.post('/ingredients/create/')
 			.send(testIngredientCreate);
 		expect(201);
 		console.log(body._name);
-		expect( testIngredientCreate.name === body._name).toBe(true);
+		expect(testIngredientCreate.name === body._name).toBe(true);
 	});
 
 	it('/ingredients/:id (GET)', async () => {
-		const {body}=await request(app.getHttpServer())
-			.get(`/ingredients/${id}`)
+		const { body } = await request(app.getHttpServer()).get(`/ingredients/${id}`);
 		expect(200);
-		expect( body._id === id).toBe(true);
+		expect(body._id === id).toBe(true);
 		expect(body._name === testIngredientCreate.name).toBe(true);
 	});
 
 	it('/ingredients/:id (DELETE)', async () => {
-		const {body}=await request(app.getHttpServer())
-			.delete(`/ingredients/${id}`)
+		const { body } = await request(app.getHttpServer()).delete(`/ingredients/${id}`);
 		expect(200);
-		expect( body._id === id).toBe(true);
+		expect(body._id === id).toBe(true);
 		expect(typeof body._name === 'string').toBe(true);
 	});
 });

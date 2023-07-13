@@ -19,7 +19,6 @@ let userId: number;
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
-	
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -45,7 +44,4 @@ describe('AppController (e2e)', () => {
 		expect(body.user.id).toBe(userId);
 		expect(body.token).toBeDefined();
 	});
-
 });
-
-export { userId };

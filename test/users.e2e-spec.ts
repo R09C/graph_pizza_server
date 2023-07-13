@@ -19,19 +19,14 @@ describe('AppController (e2e)', () => {
 	});
 
 	it('/users/ (GET)', async () => {
-		const {body}=await request(app.getHttpServer())
-			.get('/users/')
+		const { body } = await request(app.getHttpServer()).get('/users/');
 		expect(200);
 		expect(Array.isArray(body)).toBe(true);
-		
-	
 	});
 
 	it('/users/:id (GET)', async () => {
-		const {body}=await request(app.getHttpServer())
-			.get(`/users/${id}`)
+		const { body } = await request(app.getHttpServer()).get(`/users/${id}`);
 		expect(200);
 		expect(typeof body._email === 'string').toBe(true);
-		
 	});
 });
