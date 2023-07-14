@@ -15,9 +15,10 @@ const testLoginDto: LoginDto = {
 	password: 'graph',
 };
 
+let userId: number;
+
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
-	let userId: number;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -32,9 +33,9 @@ describe('AppController (e2e)', () => {
 		const { body } = await request(app.getHttpServer())
 			.post('/auth/register')
 			.send(testRegisterDto);
-		userId = body.id;
-		expect(body.email).toBe(testRegisterDto.email);
-		expect(body.password).not.toBe(testRegisterDto.password);
+		userId = body._id;
+		expect(body._email).toBe(testRegisterDto.email);
+		expect(body._password).not.toBe(testRegisterDto.password);
 	});
 
 	it('/auth/login (POST) - success', async () => {

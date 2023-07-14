@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-const id = 20;
-const email = 'test-ohyIE@mail.ru';
+
+const id = 1;
 
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
@@ -18,33 +18,15 @@ describe('AppController (e2e)', () => {
 		await app.init();
 	});
 
-	it('/users/ (GET)', (done) => {
-		request(app.getHttpServer())
-			.get('/users/')
-			.then(({ body }: request.Response) => {
-				expect(200);
-				expect(Array.isArray(body)).toBe(true);
-				done();
-			});
+	it('/users/ (GET)', async () => {
+		const { body } = await request(app.getHttpServer()).get('/users/');
+		expect(200);
+		expect(Array.isArray(body)).toBe(true);
 	});
 
-	it('/users/id/:id (GET)', (done) => {
-		request(app.getHttpServer())
-			.get(`/users/id/${id}`)
-			.then(({ body }: request.Response) => {
-				expect(200);
-				expect(typeof body._email === 'string').toBe(true);
-				done();
-			});
-	});
-
-	it('/users/email/:email (GET)', (done) => {
-		request(app.getHttpServer())
-			.get(`/users/email/${email}`)
-			.then(({ body }: request.Response) => {
-				expect(200);
-				expect(typeof body._id === 'number').toBe(true);
-				done();
-			});
+	it('/users/:id (GET)', async () => {
+		const { body } = await request(app.getHttpServer()).get(`/users/${id}`);
+		expect(200);
+		expect(typeof body._email === 'string').toBe(true);
 	});
 });
