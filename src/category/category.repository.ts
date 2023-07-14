@@ -3,18 +3,23 @@ import { CategorySchema } from '@prisma/client';
 import { CategoryEntity } from '../entities/category.entity';
 import { CategoryCreateDto } from './dtos/category-create.dto';
 import { Injectable } from '@nestjs/common';
+import { CategoryFactory } from '../factory/factories/category.factory';
 
 @Injectable()
 export class CategoryRepository {
-	constructor(private readonly prismaService: PrismaService) {}
+	constructor(
+		private readonly prismaService: PrismaService,
+		private readonly categoryFactory: CategoryFactory,
+	) {}
 
 	async getAllCategories(): Promise<CategorySchema[]> {
-		return this.prismaService.categorySchema.findMany({
+		const categories=await this.prismaService.categorySchema.findMany({
 			select: {
 				id: true,
 				name: true,
 			},
 		});
+		return this.categoryFactory.createEntities(categories);
 	}
 
 	async getCategoryById(id: number): Promise<CategoryEntity | null> {
@@ -23,14 +28,12 @@ export class CategoryRepository {
 				id,
 			},
 		});
-		if (!category) return null;
-		return new CategoryEntity(category);
+		return this.categoryFactory.createEntity(category);
 	}
 
 	async createCategory(data: CategoryCreateDto): Promise<CategoryEntity | null> {
 		const category = await this.prismaService.categorySchema.create({ data });
-		if (!category) return null;
-		return new CategoryEntity(category);
+		return this.categoryFactory.createEntity(category);
 	}
 
 	async deleteCategory(id: number): Promise<CategoryEntity | null> {
@@ -39,7 +42,6 @@ export class CategoryRepository {
 				id,
 			},
 		});
-		if (!category) return null;
-		return new CategoryEntity(category);
+		return this.categoryFactory.createEntity(category);
 	}
 }
