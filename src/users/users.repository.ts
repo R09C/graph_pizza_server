@@ -5,6 +5,7 @@ import { UserSchema } from '@prisma/client';
 import { UsersUpdateDto } from './dtos/users-update.dto';
 import { UserEntity } from '../entities/user.entity';
 import { UserFactory } from '../factory/factories/user.factory';
+import { IDisplayUser } from './interfaces/display-user.interface';
 
 @Injectable()
 export class UsersRepository {
@@ -13,13 +14,17 @@ export class UsersRepository {
 		private readonly userFactory: UserFactory,
 	) {}
 
-	async getAllUsers(): Promise<Omit<UserSchema, 'password'>[]> {
-		return this.prismaService.userSchema.findMany({
-			select: {
-				id: true,
-				email: true,
+	async getAllUsers(): Promise<IDisplayUser[]> {
+		const users = await this.prismaService.userSchema.findMany({
+			include: {
+				roles: {
+					select: {
+						role: true,
+					},
+				},
 			},
 		});
+		return this.userFactory.createEntites(users);
 	}
 
 	async getUserByEmail(email: string): Promise<UserEntity | null> {
