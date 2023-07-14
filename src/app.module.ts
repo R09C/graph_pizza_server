@@ -8,6 +8,7 @@ import { RoleModule } from './role/role.module';
 import { IngredientModule } from './ingredient/ingredient.module';
 import { CategoryModule } from './category/category.module';
 import { ProductsModule } from './products/products.module';
+import { FactoryModule } from './factory/factory.module';
 
 @Module({
 	imports: [
@@ -21,6 +22,7 @@ import { ProductsModule } from './products/products.module';
 		IngredientModule,
 		CategoryModule,
 		ProductsModule,
+		FactoryModule,
 	],
 	controllers: [],
 	providers: [],

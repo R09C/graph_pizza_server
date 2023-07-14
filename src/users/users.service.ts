@@ -10,23 +10,18 @@ export class UsersService {
 	constructor(private readonly usersRepository: UsersRepository) {}
 
 	async getAllUsers(): Promise<Omit<UserSchema, 'password'>[]> {
-		return await this.usersRepository.getAllUsers();
+		return this.usersRepository.getAllUsers();
 	}
 
 	async getUserByEmail(email: string): Promise<UserEntity | null> {
-		const user = await this.usersRepository.getUserByEmail(email);
-		if (!user) return null;
-		return new UserEntity(user);
+		return this.usersRepository.getUserByEmail(email);
 	}
 
 	async getUserById(id: number): Promise<UserEntity | null> {
-		const user = await this.usersRepository.getUserById(id);
-		if (!user) return null;
-		return new UserEntity(user);
+		return this.usersRepository.getUserById(id);
 	}
 
-	async createUser(dto: UsersCreateDto): Promise<IDisplayUser> {
-		const user = await this.usersRepository.createUser(dto);
-		return new UserEntity(user);
+	async createUser(dto: UsersCreateDto): Promise<UserEntity | null> {
+		return this.usersRepository.createUser(dto);
 	}
 }

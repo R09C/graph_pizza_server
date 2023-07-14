@@ -3,10 +3,15 @@ import { PrismaService } from '../prisma/prisma.service';
 import { UsersCreateDto } from './dtos/users-create.dto';
 import { UserSchema } from '@prisma/client';
 import { UsersUpdateDto } from './dtos/users-update.dto';
+import { UserEntity } from '../entities/user.entity';
+import { UserFactory } from '../factory/factories/user.factory';
 
 @Injectable()
 export class UsersRepository {
-	constructor(private readonly prismaService: PrismaService) {}
+	constructor(
+		private readonly prismaService: PrismaService,
+		private readonly userFactory: UserFactory,
+	) {}
 
 	async getAllUsers(): Promise<Omit<UserSchema, 'password'>[]> {
 		return this.prismaService.userSchema.findMany({
@@ -17,8 +22,8 @@ export class UsersRepository {
 		});
 	}
 
-	async getUserByEmail(email: string): Promise<UserSchema | null> {
-		return await this.prismaService.userSchema.findFirst({
+	async getUserByEmail(email: string): Promise<UserEntity | null> {
+		const user = await this.prismaService.userSchema.findFirst({
 			where: {
 				email,
 			},
@@ -30,10 +35,11 @@ export class UsersRepository {
 				},
 			},
 		});
+		return this.userFactory.createEntity(user);
 	}
 
-	async getUserById(id: number): Promise<UserSchema | null> {
-		return this.prismaService.userSchema.findFirst({
+	async getUserById(id: number): Promise<UserEntity | null> {
+		const user = await this.prismaService.userSchema.findFirst({
 			where: {
 				id,
 			},
@@ -45,10 +51,11 @@ export class UsersRepository {
 				},
 			},
 		});
+		return this.userFactory.createEntity(user);
 	}
 
-	async createUser(createUserDto: UsersCreateDto): Promise<UserSchema> {
-		return this.prismaService.userSchema.create({
+	async createUser(createUserDto: UsersCreateDto): Promise<UserEntity | null> {
+		const user = await this.prismaService.userSchema.create({
 			data: {
 				...createUserDto,
 				roles: {
@@ -62,16 +69,6 @@ export class UsersRepository {
 				},
 			},
 		});
-	}
-
-	async updateUser({ id, ...data }: UsersUpdateDto): Promise<UserSchema> {
-		return this.prismaService.userSchema.update({
-			where: {
-				id,
-			},
-			data: {
-				...data,
-			},
-		});
+		return this.userFactory.createEntity(user);
 	}
 }
