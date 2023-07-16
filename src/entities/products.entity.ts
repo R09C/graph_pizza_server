@@ -1,7 +1,8 @@
 import { ProductSchema } from '@prisma/client';
 import { IProductDisplay } from '../products/interface/products.display.interdace';
+import { IBaseEntity } from '../common/base.entity.interface';
 
-export class ProductEntity {
+export class ProductEntity implements IBaseEntity<IProductDisplay> {
 	private readonly _id: number;
 	private readonly _name: string;
 	private readonly _categoryId: number;
@@ -36,9 +37,10 @@ export class ProductEntity {
 	}
 
 	getDisplay(): IProductDisplay {
-		return {
+		const getDisplay = {
 			id: this._id,
 			name: this._name,
 		};
+		return getDisplay;
 	}
 }
