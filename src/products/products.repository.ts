@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ProductSchema } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ProductEntity } from '../entities/products.entity';
-import { ProductFactory } from '../factory/factories/products.factory';
+import { ProductEntity } from '../entities/product.entity';
+import { ProductFactory } from '../factory/factories/product.factory';
+import { IDisplayProduct } from './interface/products.display.interface';
 
 @Injectable()
 export class ProductsRepository {
@@ -11,7 +12,7 @@ export class ProductsRepository {
 		private readonly productFactory: ProductFactory,
 	) {}
 
-	async getAllProducts(): Promise<ProductEntity[]> {
+	async getAllProducts(): Promise<IDisplayProduct[]> {
 		const products = await this.prismaService.productSchema.findMany({
 			include: {
 				ingredients: {

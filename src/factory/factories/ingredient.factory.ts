@@ -1,6 +1,7 @@
 import { IngredientEntity } from '../../entities/ingredient.entity';
 import { IBaseFactory } from '../../common/base.factory.interface';
 import { IngredientSchema } from '@prisma/client';
+import { IDisplayIngredient } from '../../ingredient/interfaces/display-ingredient.interface';
 
 export class IngredientFactory implements IBaseFactory<IngredientEntity> {
 	createEntity(schema: IngredientSchema): IngredientEntity {
@@ -8,8 +9,7 @@ export class IngredientFactory implements IBaseFactory<IngredientEntity> {
 		return new IngredientEntity(schema);
 	}
 
-	createEntities(schemes: IngredientSchema[]): IngredientEntity[] {
-		const entities = schemes.map((schema) => new IngredientEntity(schema));
-		return entities;
+	createEntities(schemes: IngredientSchema[]): IDisplayIngredient[] {
+		return schemes.map((schema) => new IngredientEntity(schema).getDisplay());
 	}
 }

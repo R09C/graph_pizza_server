@@ -24,7 +24,7 @@ export class UsersRepository {
 				},
 			},
 		});
-		return this.userFactory.createEntites(users);
+		return this.userFactory.createEntities(users);
 	}
 
 	async getUserByEmail(email: string): Promise<UserEntity | null> {

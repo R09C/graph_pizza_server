@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { IngredientCreateDto } from './dtos/ingredient-create.dto';
 import { IngredientEntity } from '../entities/ingredient.entity';
 import { IngredientFactory } from '../factory/factories/ingredient.factory';
+import { IDisplayIngredient } from './interfaces/display-ingredient.interface';
 
 @Injectable()
 export class IngredientRepository {
@@ -12,7 +13,7 @@ export class IngredientRepository {
 		private readonly ingredientFactory: IngredientFactory,
 	) {}
 
-	async getAllIngredients(): Promise<IngredientSchema[]> {
+	async getAllIngredients(): Promise<IDisplayIngredient[]> {
 		const ingredients = await this.prismaService.ingredientSchema.findMany();
 		return this.ingredientFactory.createEntities(ingredients);
 	}
