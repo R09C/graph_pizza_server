@@ -2,7 +2,7 @@ import { CategorySchema } from '@prisma/client';
 import { IDisplayCategory } from 'src/category/interfaces/display-category.interface';
 import { IBaseEntity } from '../common/base.entity.interface';
 
-export class CategoryEntity implements IBaseEntity {
+export class CategoryEntity implements IBaseEntity<IDisplayCategory> {
 	private readonly _id: number;
 	private readonly _name: string;
 
@@ -20,9 +20,10 @@ export class CategoryEntity implements IBaseEntity {
 	}
 
 	getDisplay(): IDisplayCategory {
-		return {
+		const getDisplay = {
 			id: this._id,
 			name: this._name,
 		};
+		return getDisplay;
 	}
 }

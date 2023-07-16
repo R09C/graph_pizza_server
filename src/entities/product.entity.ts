@@ -1,5 +1,5 @@
 import { ProductSchema } from '@prisma/client';
-import { IDisplayProduct } from '../products/interface/products.display.interface';
+import { IProductDisplay } from '../products/interface/products.display.interdace';
 
 export class ProductEntity {
 	private readonly _id: number;
@@ -35,7 +35,7 @@ export class ProductEntity {
 		return this._ingredients;
 	}
 
-	getDisplay(): IDisplayProduct {
+	getDisplay(): IProductDisplay {
 		return {
 			id: this._id,
 			name: this._name,

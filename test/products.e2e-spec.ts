@@ -3,11 +3,14 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { IngredientCreateDto } from '../src/ingredient/dtos/ingredient-create.dto';
+import { ProductCreateDto } from '../src/products/dtos/product-create.dto';
 
-const id = 2;
+const id = 1;
 
-const testIngredientCreate: IngredientCreateDto = {
-	name: 'test1111',
+const test_product_creat_dto: ProductCreateDto = {
+	name: 'test_2',
+	categoryId: 1,
+	ingredients: [{ ingredientId: 1 }],
 };
 
 describe('AppController (e2e)', () => {
@@ -23,31 +26,33 @@ describe('AppController (e2e)', () => {
 		await app.init();
 	});
 
-	it('/ingredients/ (GET)', async () => {
-		const { body } = await request(app.getHttpServer()).get('/ingredients/');
+	it('/products/ (GET)', async () => {
+		const { body } = await request(app.getHttpServer()).get('/products/');
 		expect(200);
 		expect(Array.isArray(body)).toBe(true);
 	});
 
-	it('/ingredients/create/ (POST)', async () => {
+	it('/products/create/ (POST)', async () => {
 		const { body } = await request(app.getHttpServer())
-			.post('/ingredients/create/')
-			.send(testIngredientCreate);
+			.post('/products/create/')
+			.send(test_product_creat_dto);
+		// console.log(body)
 		expect(201);
-		console.log(body._name);
-		expect(testIngredientCreate.name === body._name).toBe(true);
+		expect(test_product_creat_dto.name === body._name).toBe(true);
 	});
 
-	it('/ingredients/:id (GET)', async () => {
-		const { body } = await request(app.getHttpServer()).get(`/ingredients/${id}`);
+	it('/products/:id (GET)', async () => {
+		const { body } = await request(app.getHttpServer()).get(`/products/${id}`);
 		expect(200);
+		// console.log(body);
 		expect(body._id === id).toBe(true);
-		expect(body._name === testIngredientCreate.name).toBe(true);
+		expect(body._name === test_product_creat_dto.name).toBe(true);
 	});
 
-	it('/ingredients/:id (DELETE)', async () => {
-		const { body } = await request(app.getHttpServer()).delete(`/ingredients/${id}`);
+	it('/products/:id (DELETE)', async () => {
+		const { body } = await request(app.getHttpServer()).delete(`/products/${id}`);
 		expect(200);
+		console.log(body);
 		expect(body._id === id).toBe(true);
 		expect(typeof body._name === 'string').toBe(true);
 	});

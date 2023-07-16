@@ -3,7 +3,7 @@ import { IDisplayUser } from '../users/interfaces/display-user.interface';
 import { IUserWithRoles } from '../users/interfaces/user-with-roles.interface';
 import { IBaseEntity } from '../common/base.entity.interface';
 
-export class UserEntity implements IBaseEntity {
+export class UserEntity implements IBaseEntity<IDisplayUser> {
 	private readonly _id: number;
 	private readonly _email: string;
 	private readonly _password: string;
@@ -33,12 +33,11 @@ export class UserEntity implements IBaseEntity {
 	}
 
 	getDisplay(): IDisplayUser {
-		const user = {
+		const getDisplay = {
 			id: this._id,
 			email: this._email,
 		};
-		console.log(user);
-		return user;
+		return getDisplay;
 	}
 
 	getUserWithRoles(): IUserWithRoles {
