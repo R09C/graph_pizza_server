@@ -1,4 +1,4 @@
-export interface IBaseEntity<K> {
+export interface IBaseEntity {
 	id: number;
-	getDisplay: () => K;
+	getDisplay: () => Record<string, any>;
 }

@@ -1,5 +1,6 @@
-import { IBaseDisplay } from "../../common/interceptors/display.interface";
+import { IBaseDisplay } from '../../common/interceptors/display.interface';
 
-export interface IDisplayUser extends IBaseDisplay {
+export interface IDisplayUser {
+	id: number;
 	email: string;
 }
