@@ -11,103 +11,103 @@ datasource db {
 }
 
 model UserSchema {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique
-  password     String
-  roles        UserOnRolesSchema[]
+  id       Int                 @id @default(autoincrement())
+  email    String              @unique
+  password String
+  roles    UserOnRolesSchema[]
 
   @@map("users")
 }
 
 model RoleSchema {
- id           Int            @id @default(autoincrement())
- value        String         @unique
- users        UserOnRolesSchema[]
+  id    Int                 @id @default(autoincrement())
+  value String              @unique
+  users UserOnRolesSchema[]
 
- @@map("role")
+  @@map("role")
 }
 
 model UserOnRolesSchema {
-  user       UserSchema     @relation(fields: [userId], references: [id])
-  userId     Int
-  role       RoleSchema     @relation(fields: [roleId], references: [id])
-  roleId     Int
+  user   UserSchema @relation(fields: [userId], references: [id])
+  userId Int
+  role   RoleSchema @relation(fields: [roleId], references: [id])
+  roleId Int
 
   @@id([userId, roleId])
   @@map("user_roles")
 }
 
 model ProductSchema {
- id                 Int                             @id @default(autoincrement())
- name               String                          @unique
- ingredients        ProductOnIngredientsSchema[]
- category           CategorySchema                  @relation(fields: [categoryId], references: [id])
- categoryId         Int
- characteristics    ProductOnCharacteristicSchema[]
+  id              Int                             @id @default(autoincrement())
+  name            String                          @unique
+  ingredients     ProductOnIngredientsSchema[]
+  category        CategorySchema                  @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  characteristics ProductOnCharacteristicSchema[]
 
- @@map("product")
+  @@map("product")
 }
 
 model ProductOnCharacteristicSchema {
-   product             ProductSchema          @relation(fields: [productId], references: [id], onDelete: Cascade)
-   productId           Int
-   characteristic      CharacteristicSchema   @relation(fields: [characteristicId], references: [id], onDelete: Cascade)
-   characteristicId    Int
+  product          ProductSchema        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId        Int
+  characteristic   CharacteristicSchema @relation(fields: [characteristicId], references: [id], onDelete: Cascade)
+  characteristicId Int
 
-   @@id([productId, characteristicId])
-   @@map("product_characteristics")
+  @@id([productId, characteristicId])
+  @@map("product_characteristics")
 }
 
 model CharacteristicSchema {
-  id           Int                              @id @default(autoincrement())
-  price        Int
-  size         SizeSchema?                      @relation(fields: [sizeId], references: [id])
-  sizeId       Int?
-  products     ProductOnCharacteristicSchema[]
+  id       Int                             @id @default(autoincrement())
+  price    Int
+  size     SizeSchema?                     @relation(fields: [sizeId], references: [id])
+  sizeId   Int?
+  products ProductOnCharacteristicSchema[]
 
   @@map("characteristics")
 }
 
 model SizeSchema {
-  id                  Int                           @id @default(autoincrement())
-  value               String
-  unit                UnitSchema                    @relation(fields: [unitId], references: [id])
-  unitId              Int
-  characteristics     CharacteristicSchema[]
+  id              Int                    @id @default(autoincrement())
+  value           String
+  unit            UnitSchema             @relation(fields: [unitId], references: [id])
+  unitId          Int
+  characteristics CharacteristicSchema[]
 
   @@map("product_sizes")
 }
 
 model UnitSchema {
-  id           Int                        @id @default(autoincrement())
-  value        String                     @unique
-  sizes        SizeSchema[]
+  id    Int          @id @default(autoincrement())
+  value String       @unique
+  sizes SizeSchema[]
 
   @@map("units")
 }
 
 model CategorySchema {
-  id           Int                        @id @default(autoincrement())
-  name         String                     @unique
-  product      ProductSchema[]
+  id      Int             @id @default(autoincrement())
+  name    String          @unique
+  product ProductSchema[]
 
   @@map("product_category")
 }
 
 model IngredientSchema {
- id           Int                          @id @default(autoincrement())
- name         String                       @unique
- products     ProductOnIngredientsSchema[]
+  id       Int                          @id @default(autoincrement())
+  name     String                       @unique
+  products ProductOnIngredientsSchema[]
 
- @@map("ingredient")
+  @@map("ingredient")
 }
 
 model ProductOnIngredientsSchema {
- product         ProductSchema         @relation(fields: [productId], references: [id], onDelete: Cascade)
- productId       Int
- ingredient      IngredientSchema    @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
- ingredientId    Int
+  product      ProductSchema    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    Int
+  ingredient   IngredientSchema @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredientId Int
 
- @@id([productId, ingredientId])
- @@map("product_ingredients")
+  @@id([productId, ingredientId])
+  @@map("product_ingredients")
 }
