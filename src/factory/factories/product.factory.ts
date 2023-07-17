@@ -1,7 +1,7 @@
 import { ProductEntity } from 'src/entities/product.entity';
 import { IBaseFactory } from '../../common/base.factory.interface';
 import { ProductSchema } from '@prisma/client';
-import { IDisplayProduct } from '../../products/interface/products.display.interface';
+import { IDisplayProduct } from '../../products/interface/product.display.interface';
 
 export class ProductFactory implements IBaseFactory<ProductEntity> {
 	createEntity(schema: ProductSchema): ProductEntity | null {

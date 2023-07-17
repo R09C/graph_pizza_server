@@ -11,7 +11,7 @@ export class UserFactory implements IBaseFactory<UserEntity> {
 		return new UserEntity(schema);
 	}
 
-	createEntities(massSchema: UserSchema[] | null): IDisplayUser[] {
-		return massSchema.map((schema) => new UserEntity(schema).getDisplay());
+	createEntities(schemas: UserSchema[]): IDisplayUser[] {
+		return schemas.map((schema) => new UserEntity(schema).getDisplay());
 	}
 }

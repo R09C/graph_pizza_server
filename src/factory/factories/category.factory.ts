@@ -9,7 +9,7 @@ export class CategoryFactory implements IBaseFactory<CategoryEntity> {
 		return new CategoryEntity(schema);
 	}
 
-	createEntities(schemes: CategorySchema[]): IDisplayCategory[] {
-		return schemes.map((schema) => new CategoryEntity(schema).getDisplay());
+	createEntities(schemas: CategorySchema[]): IDisplayCategory[] {
+		return schemas.map((schema) => new CategoryEntity(schema).getDisplay());
 	}
 }

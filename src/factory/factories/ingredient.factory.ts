@@ -9,7 +9,7 @@ export class IngredientFactory implements IBaseFactory<IngredientEntity> {
 		return new IngredientEntity(schema);
 	}
 
-	createEntities(schemes: IngredientSchema[]): IDisplayIngredient[] {
-		return schemes.map((schema) => new IngredientEntity(schema).getDisplay());
+	createEntities(schemas: IngredientSchema[]): IDisplayIngredient[] {
+		return schemas.map((schema) => new IngredientEntity(schema).getDisplay());
 	}
 }
