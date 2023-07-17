@@ -38,25 +38,34 @@ model UserOnRolesSchema {
 }
 
 model ProductSchema {
- id                 Int                        @id @default(autoincrement())
- name               String                     @unique
+ id                 Int                             @id @default(autoincrement())
+ name               String                          @unique
  ingredients        ProductOnIngredientsSchema[]
- category           CategorySchema             @relation(fields: [categoryId], references: [id])
+ category           CategorySchema                  @relation(fields: [categoryId], references: [id])
  categoryId         Int
- characteristics    ProductCharacteristicSchema[]
+ characteristics    ProductOnCharacteristicSchema[]
 
  @@map("product")
 }
 
-model ProductCharacteristicSchema {
-  id           Int                        @id @default(autoincrement())
-  price        Int
-  size         SizeSchema?                 @relation(fields: [sizeId], references: [id])
-  sizeId       Int?
-  product      ProductSchema              @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId    Int
+model ProductOnCharacteristicSchema {
+   product             ProductSchema          @relation(fields: [productId], references: [id], onDelete: Cascade)
+   productId           Int
+   characteristic      CharacteristicSchema   @relation(fields: [characteristicId], references: [id], onDelete: Cascade)
+   characteristicId    Int
 
-  @@map("product_characteristics")
+   @@id([productId, characteristicId])
+   @@map("product_characteristics")
+}
+
+model CharacteristicSchema {
+  id           Int                              @id @default(autoincrement())
+  price        Int
+  size         SizeSchema?                      @relation(fields: [sizeId], references: [id])
+  sizeId       Int?
+  products     ProductOnCharacteristicSchema[]
+
+  @@map("characteristics")
 }
 
 model SizeSchema {
@@ -64,7 +73,7 @@ model SizeSchema {
   value               String
   unit                UnitSchema                    @relation(fields: [unitId], references: [id])
   unitId              Int
-  characteristics     ProductCharacteristicSchema[]
+  characteristics     CharacteristicSchema[]
 
   @@map("product_sizes")
 }
