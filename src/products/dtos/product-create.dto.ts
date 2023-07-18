@@ -1,12 +1,15 @@
-import { IsArray, IsNumber, IsString } from "class-validator";
+import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class ProductCreateDto {
 	@IsString()
 	name: string;
+
 	@IsNumber()
 	categoryId: number;
+
 	@IsArray()
-	ingredients: { ingredientId: number }[];
+	ingredients: number[];
+
 	@IsArray()
-	characteristics: { characteristicId: number }[];
+	characteristics: number[];
 }

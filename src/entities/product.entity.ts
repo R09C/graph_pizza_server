@@ -1,13 +1,22 @@
-import { ProductSchema } from '@prisma/client';
+import {
+	CharacteristicSchema,
+	IngredientSchema,
+	ProductSchema,
+	SizeSchema,
+	UnitSchema,
+} from '@prisma/client';
 import { IDisplayProduct } from '../products/interface/product.display.interface';
+import { IDisplayIngredient } from '../ingredient/interfaces/display-ingredient.interface';
+import { IngredientEntity } from './ingredient.entity';
+import { CharacteristicEntity } from './characteristic.entity';
+import { IDisplayCharacteristic } from '../characteristic/interfaces/display-characteristic.interface';
 
 export class ProductEntity {
 	private readonly _id: number;
 	private readonly _name: string;
 	private readonly _categoryId: number;
-	private readonly _ingredients: string[];
-	private readonly _size: number[];
-	private readonly _price: number[];
+	private readonly _ingredients: IDisplayIngredient[];
+	private readonly _characteristics: IDisplayCharacteristic[];
 
 	constructor({
 		id,
@@ -16,17 +25,20 @@ export class ProductEntity {
 		ingredients,
 		characteristics,
 	}: ProductSchema & {
-		ingredients?: { ingredient: { name: string } }[];
-		characteristics?: { characteristic: { size: number; price: number } }[];
+		ingredients?: { ingredient: IngredientSchema }[];
+		characteristics?: {
+			characteristic: CharacteristicSchema & { size: SizeSchema & { unit: UnitSchema } };
+		}[];
 	}) {
 		this._id = id;
 		this._name = name;
 		this._categoryId = categoryId;
-		this._ingredients = ingredients?.map((ingredient) => ingredient.ingredient.name);
-		[this._size, this._price] = characteristics?.map((characteristic) => [
-			characteristic.characteristic.size,
-			characteristic.characteristic.price,
-		]);
+		this._ingredients = ingredients?.map((ingredient) =>
+			new IngredientEntity(ingredient.ingredient).getDisplay(),
+		);
+		this._characteristics = characteristics?.map((ch) =>
+			new CharacteristicEntity(ch.characteristic).getDisplay(),
+		);
 	}
 
 	get id(): number {
@@ -37,26 +49,16 @@ export class ProductEntity {
 		return this._name;
 	}
 
-	get categoryId(): number {
-		return this._categoryId;
-	}
-
-	get ingredients(): string[] {
+	get ingredients(): IDisplayIngredient[] {
 		return this._ingredients;
-	}
-
-	get size(): number[] {
-		return this._size;
-	}
-
-	get price(): number[] {
-		return this._price;
 	}
 
 	getDisplay(): IDisplayProduct {
 		return {
 			id: this._id,
 			name: this._name,
+			ingredients: this._ingredients,
+			characteristics: this._characteristics,
 		};
 	}
 }

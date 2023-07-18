@@ -1,9 +1,19 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpException,
+	HttpStatus,
+	Param,
+	ParseIntPipe,
+	Post,
+} from '@nestjs/common';
 import { CharacteristicService } from './characteristic.service';
 import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';
 import { CharacteristicCreateDto } from './dtos/characteristic.create.dto';
 
-@Controller('characteristic')
+@Controller('characteristics')
 export class CharacteristicController {
 	constructor(private readonly characteristicService: CharacteristicService) {}
 
@@ -12,7 +22,7 @@ export class CharacteristicController {
 		try {
 			return await this.characteristicService.getAllCharacteristics();
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

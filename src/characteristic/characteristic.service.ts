@@ -2,24 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { CharacteristicCreateDto } from './dtos/characteristic.create.dto';
 import { CharacteristicEntity } from '../entities/characteristic.entity';
 import { CharacteristicRepository } from './characteristic.repository';
+import { IDisplayCharacteristic } from './interfaces/display-characteristic.interface';
 
 @Injectable()
 export class CharacteristicService {
-	constructor(private readonly сharacteristicRepository: CharacteristicRepository) {}
+	constructor(private readonly characteristicRepository: CharacteristicRepository) {}
 
-	async getAllCharacteristics(): Promise<CharacteristicEntity[]> {
-		return this.сharacteristicRepository.getAllCharacteristics();
+	async getAllCharacteristics(): Promise<IDisplayCharacteristic[]> {
+		return this.characteristicRepository.getAllCharacteristics();
 	}
 
 	async getCharacteristicById(id: number): Promise<CharacteristicEntity> {
-		return this.сharacteristicRepository.getCharacteristicById(id);
+		return this.characteristicRepository.getCharacteristicById(id);
 	}
 
 	async createCharacteristic(dto: CharacteristicCreateDto): Promise<CharacteristicEntity> {
-		return this.сharacteristicRepository.createCharacteristic(dto);
+		return this.characteristicRepository.createCharacteristic(dto);
 	}
 
 	async deleteCharacteristic(id: number): Promise<CharacteristicEntity> {
-		return this.сharacteristicRepository.deleteCharacteristic(id);
+		return this.characteristicRepository.deleteCharacteristic(id);
 	}
 }
