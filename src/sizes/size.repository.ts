@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { SizeEntity } from '../entities/size.entity';
 import { SizeFactory } from '../factory/factories/size.factory';
 import { SizeCreateDto } from './dtos/size.create.dto';
-
+import { IDisplaySize } from './interfaces/display-size.interface';
 
 @Injectable()
 export class SizeRepository {
@@ -12,23 +12,29 @@ export class SizeRepository {
 		private readonly sizeFactory: SizeFactory,
 	) {}
 
-	async getAllSizes(): Promise<SizeEntity[]> {
-		const Sizes = await this.prismaService.sizeSchema.findMany();
-		return this.sizeFactory.createEntities(Sizes);
+	async getAllSizes(): Promise<IDisplaySize[]> {
+		const sizes = await this.prismaService.sizeSchema.findMany({
+			include: { unit: true },
+		});
+		return this.sizeFactory.createEntities(sizes);
 	}
 
 	async getSizeById(id: number): Promise<SizeEntity | null> {
 		const size = await this.prismaService.sizeSchema.findFirst({
 			where: { id },
+			include: { unit: true },
 		});
 		return this.sizeFactory.createEntity(size);
 	}
 
-	async createSize({ value,unitId }: SizeCreateDto): Promise<SizeEntity | null> {
+	async createSize({ value, unitId }: SizeCreateDto): Promise<SizeEntity | null> {
 		const size = await this.prismaService.sizeSchema.create({
 			data: {
 				value: value,
-				unit: { connect: { id: unitId} },
+				unit: { connect: { id: unitId } },
+			},
+			include: {
+				unit: true,
 			},
 		});
 
@@ -38,6 +44,9 @@ export class SizeRepository {
 	async deleteSize(id: number): Promise<SizeEntity | null> {
 		const size = await this.prismaService.sizeSchema.delete({
 			where: { id },
+			include: {
+				unit: true,
+			},
 		});
 
 		return this.sizeFactory.createEntity(size);

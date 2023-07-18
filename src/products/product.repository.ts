@@ -18,19 +18,16 @@ export class ProductRepository {
 			include: {
 				ingredients: {
 					select: {
-						ingredient: {
-							select: {
-								name: true,
-							},
-						},
+						ingredient: true,
 					},
 				},
 				characteristics: {
-					select: {
+					include: {
 						characteristic: {
-							select: {
-								size: true,
-								price: true,
+							include: {
+								size: {
+									include: { unit: true },
+								},
 							},
 						},
 					},
@@ -49,19 +46,16 @@ export class ProductRepository {
 			include: {
 				ingredients: {
 					select: {
-						ingredient: {
-							select: {
-								name: true,
-							},
-						},
+						ingredient: true,
 					},
 				},
 				characteristics: {
-					select: {
+					include: {
 						characteristic: {
-							select: {
-								size: true,
-								price: true,
+							include: {
+								size: {
+									include: { unit: true },
+								},
 							},
 						},
 					},
@@ -87,28 +81,25 @@ export class ProductRepository {
 					},
 				},
 				ingredients: {
-					create: ingredients,
+					create: ingredients.map((el) => ({ ingredientId: el })),
 				},
 				characteristics: {
-					create: characteristics,
+					create: characteristics.map((el) => ({ characteristicId: el })),
 				},
 			},
 			include: {
 				ingredients: {
 					select: {
-						ingredient: {
-							select: {
-								name: true,
-							},
-						},
+						ingredient: true,
 					},
 				},
 				characteristics: {
-					select: {
+					include: {
 						characteristic: {
-							select: {
-								size: true,
-								price: true,
+							include: {
+								size: {
+									include: { unit: true },
+								},
 							},
 						},
 					},
@@ -127,19 +118,16 @@ export class ProductRepository {
 			include: {
 				ingredients: {
 					select: {
-						ingredient: {
-							select: {
-								name: true,
-							},
-						},
+						ingredient: true,
 					},
 				},
 				characteristics: {
-					select: {
+					include: {
 						characteristic: {
-							select: {
-								size: true,
-								price: true,
+							include: {
+								size: {
+									include: { unit: true },
+								},
 							},
 						},
 					},

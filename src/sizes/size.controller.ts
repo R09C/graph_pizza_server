@@ -1,9 +1,19 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	HttpException,
+	HttpStatus,
+	Param,
+	ParseIntPipe,
+	Post,
+} from '@nestjs/common';
 import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';
 import { SizeCreateDto } from './dtos/size.create.dto';
 import { SizeService } from './size.service';
 
-@Controller('size')
+@Controller('sizes')
 export class SizeController {
 	constructor(private readonly sizeService: SizeService) {}
 
@@ -29,10 +39,9 @@ export class SizeController {
 	@Post('create')
 	async createSize(@Body() dto: SizeCreateDto) {
 		try {
-			console.log(dto);
 			return await this.sizeService.createSize(dto);
 		} catch (error) {
-			console.log(error,dto);
+			console.log(error, dto);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

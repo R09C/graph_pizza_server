@@ -13,7 +13,7 @@ import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';
 import { ProductService } from './product.service';
 import { ProductCreateDto } from './dtos/product-create.dto';
 
-@Controller('product')
+@Controller('products')
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
@@ -22,7 +22,7 @@ export class ProductController {
 		try {
 			return await this.productService.getAllProducts();
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -46,7 +46,7 @@ export class ProductController {
 	}
 
 	@Delete(':id')
-	async DeleteProduct(@Param('id', ParseIntPipe) id: number) {
+	async deleteProduct(@Param('id', ParseIntPipe) id: number) {
 		try {
 			return await this.productService.deleteProduct(id);
 		} catch (error) {

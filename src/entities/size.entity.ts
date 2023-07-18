@@ -1,15 +1,16 @@
-import {SizeSchema} from '@prisma/client';
+import { SizeSchema, UnitSchema } from '@prisma/client';
 import { IBaseEntity } from 'src/common/base.entity.interface';
+import { IDisplaySize } from '../sizes/interfaces/display-size.interface';
 
 export class SizeEntity implements IBaseEntity {
 	private readonly _id: number;
 	private readonly _value: string;
-	private readonly _unitId: number;
+	private readonly _unit: string;
 
-	constructor({ id, value, unitId}: SizeSchema) {
+	constructor({ id, value, unit }: SizeSchema & { unit: UnitSchema }) {
 		this._id = id;
 		this._value = value;
-		this._unitId = unitId;
+		this._unit = unit.value;
 	}
 
 	get id(): number {
@@ -20,11 +21,11 @@ export class SizeEntity implements IBaseEntity {
 		return this._value;
 	}
 
-	get unitId(): number {
-		return this._unitId;
-	}
-
-	getDisplay(): SizeEntity {
-		return this;
+	getDisplay(): IDisplaySize {
+		return {
+			id: this._id,
+			value: this._value,
+			unit: this._unit,
+		};
 	}
 }

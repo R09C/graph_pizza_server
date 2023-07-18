@@ -1,14 +1,21 @@
-import { CharacteristicSchema } from '@prisma/client';
+import { CharacteristicSchema, SizeSchema, UnitSchema } from '@prisma/client';
 import { IBaseEntity } from 'src/common/base.entity.interface';
+import { IDisplaySize } from '../sizes/interfaces/display-size.interface';
+import { SizeEntity } from './size.entity';
+import { IDisplayCharacteristic } from '../characteristic/interfaces/display-characteristic.interface';
 
-export class CharacteristicEntity implements IBaseEntity{
+export class CharacteristicEntity implements IBaseEntity {
 	private readonly _id: number;
-	private readonly _sizeId: number;
+	private readonly _size: IDisplaySize;
 	private readonly _price: number;
 
-	constructor({ id, sizeId, price }: CharacteristicSchema) {
+	constructor({
+		id,
+		price,
+		size,
+	}: CharacteristicSchema & { size: SizeSchema & { unit: UnitSchema } }) {
 		this._id = id;
-		this._sizeId = sizeId;
+		this._size = new SizeEntity(size).getDisplay();
 		this._price = price;
 	}
 
@@ -16,15 +23,15 @@ export class CharacteristicEntity implements IBaseEntity{
 		return this._id;
 	}
 
-	get sizeId(): number {
-		return this._sizeId;
+	get size(): IDisplaySize {
+		return this._size;
 	}
 
-	get price(): number {
-		return this._price;
-	}
-
-	getDisplay(): CharacteristicEntity {
-		return this
+	getDisplay(): IDisplayCharacteristic {
+		return {
+			id: this._id,
+			price: this._price,
+			size: this._size,
+		};
 	}
 }

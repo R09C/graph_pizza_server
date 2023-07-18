@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { SizeEntity } from '../entities/size.entity';
 import { SizeRepository } from './size.repository';
 import { SizeCreateDto } from './dtos/size.create.dto';
+import { IDisplaySize } from './interfaces/display-size.interface';
 
 @Injectable()
 export class SizeService {
 	constructor(private readonly sizeRepository: SizeRepository) {}
 
-	async getAllSizes(): Promise<SizeEntity[]> {
+	async getAllSizes(): Promise<IDisplaySize[]> {
 		return this.sizeRepository.getAllSizes();
 	}
 
