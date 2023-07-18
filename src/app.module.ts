@@ -7,8 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { RoleModule } from './role/role.module';
 import { IngredientModule } from './ingredient/ingredient.module';
 import { CategoryModule } from './category/category.module';
-import { ProductsModule } from './products/products.module';
+import { ProductsModule } from './products/product.module';
 import { FactoryModule } from './factory/factory.module';
+import { CharacteristicModule } from './characteristic/characteristic.module';
+import { SizesModule } from './sizes/size.module';
 
 @Module({
 	imports: [
@@ -23,6 +25,8 @@ import { FactoryModule } from './factory/factory.module';
 		CategoryModule,
 		ProductsModule,
 		FactoryModule,
+		CharacteristicModule,
+		SizesModule,
 	],
 	controllers: [],
 	providers: [],
