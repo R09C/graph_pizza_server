@@ -89,6 +89,7 @@ model UnitSchema {
 model CategorySchema {
   id      Int             @id @default(autoincrement())
   name    String          @unique
+  alias   String          @unique
   product ProductSchema[]
 
   @@map("product_category")

@@ -44,7 +44,6 @@ export class ProductController {
 		try {
 			return await this.productService.updateProduct(dto);
 		} catch (error) {
-			console.log(error)
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

@@ -116,24 +116,28 @@ export class ProductRepository {
 		ingredients,
 		categoryId,
 		characteristics,
-		...dto
-	}: ProductUpdateDto): Promise<ProductEntity> {
+		name,
+	}: ProductUpdateDto): Promise<ProductEntity | null> {
 		const product = await this.prismaService.productSchema.update({
 			where: {
 				id,
 			},
 			data: {
-				...dto,
+				name: { set: name },
 				category: {
 					connect: {
 						id: categoryId,
 					},
 				},
 				ingredients: {
-					create: ingredients.map((el) => ({ ingredientId: el })),
+					deleteMany: {},
+					createMany: { data: ingredients.map((ingredientId) => ({ ingredientId })) },
 				},
 				characteristics: {
-					create: characteristics.map((el) => ({ characteristicId: el })),
+					deleteMany: {},
+					createMany: {
+						data: characteristics.map((characteristicId) => ({ characteristicId })),
+					},
 				},
 			},
 			include: {

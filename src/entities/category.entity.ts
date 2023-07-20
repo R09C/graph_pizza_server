@@ -5,10 +5,12 @@ import { IBaseEntity } from '../common/base.entity.interface';
 export class CategoryEntity implements IBaseEntity {
 	private readonly _id: number;
 	private readonly _name: string;
+	private readonly _alias: string;
 
-	constructor({ id, name }: CategorySchema) {
+	constructor({ id, name, alias }: CategorySchema) {
 		this._id = id;
 		this._name = name;
+		this._alias = alias;
 	}
 
 	get id(): number {
@@ -23,6 +25,7 @@ export class CategoryEntity implements IBaseEntity {
 		return {
 			id: this._id,
 			name: this._name,
+			alias: this._alias,
 		};
 	}
 }

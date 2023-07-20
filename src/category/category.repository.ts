@@ -14,19 +14,14 @@ export class CategoryRepository {
 	) {}
 
 	async getAllCategories(): Promise<IDisplayCategory[]> {
-		const categories = await this.prismaService.categorySchema.findMany({
-			select: {
-				id: true,
-				name: true,
-			},
-		});
+		const categories = await this.prismaService.categorySchema.findMany();
 		return this.categoryFactory.createEntities(categories);
 	}
 
-	async getCategoryById(id: number): Promise<CategoryEntity | null> {
+	async getCategoryByAlias(alias: string): Promise<CategoryEntity | null> {
 		const category = await this.prismaService.categorySchema.findFirst({
 			where: {
-				id,
+				alias,
 			},
 		});
 		return this.categoryFactory.createEntity(category);

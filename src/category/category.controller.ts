@@ -27,10 +27,10 @@ export class CategoryController {
 		}
 	}
 
-	@Get(':id')
-	async getCategory(@Param('id', ParseIntPipe) id: number) {
+	@Get(':alias')
+	async getCategory(@Param('alias') alias: string) {
 		try {
-			return await this.categoryService.getCategoryById(id);
+			return await this.categoryService.getCategoryByAlias(alias);
 		} catch (error) {
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

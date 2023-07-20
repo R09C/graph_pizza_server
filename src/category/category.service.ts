@@ -13,8 +13,8 @@ export class CategoryService {
 		return this.categoryRepository.getAllCategories();
 	}
 
-	async getCategoryById(id: number): Promise<CategoryEntity> {
-		return this.categoryRepository.getCategoryById(id);
+	async getCategoryByAlias(alias: string): Promise<CategoryEntity> {
+		return this.categoryRepository.getCategoryByAlias(alias);
 	}
 
 	async createCategory(dto: CategoryCreateDto): Promise<CategoryEntity | null> {
