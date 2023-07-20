@@ -11,6 +11,7 @@ import { ProductsModule } from './products/product.module';
 import { FactoryModule } from './factory/factory.module';
 import { CharacteristicModule } from './characteristic/characteristic.module';
 import { SizesModule } from './sizes/size.module';
+import { PicturesModule } from './pictures/pictures.module';
 
 @Module({
 	imports: [
@@ -27,6 +28,7 @@ import { SizesModule } from './sizes/size.module';
 		FactoryModule,
 		CharacteristicModule,
 		SizesModule,
+		PicturesModule,
 	],
 	controllers: [],
 	providers: [],

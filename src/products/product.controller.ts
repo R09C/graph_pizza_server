@@ -44,6 +44,7 @@ export class ProductController {
 		try {
 			return await this.productService.updateProduct(dto);
 		} catch (error) {
+			console.log(error);
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -57,10 +58,10 @@ export class ProductController {
 		}
 	}
 
-	@Get(':category')
-	async getProductsByCategory(@Param('category') category: string) {
+	@Get(':alias')
+	async getProductsByCategory(@Param('alias') alias: string) {
 		try {
-			return await this.productService.getProductsByCategory(category);
+			return await this.productService.getProductsByCategory(alias);
 		} catch (error) {
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

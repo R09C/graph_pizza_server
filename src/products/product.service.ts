@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ProductRepository } from './product.repository';
 import { ProductCreateDto } from './dtos/product-create.dto';
-import { IDisplayProduct } from './interface/product.display.interface';
+import { IDisplayProduct } from './interfaces/display-product.interface';
 import { ProductEntity } from '../entities/product.entity';
 import { ProductUpdateDto } from './dtos/product-update.dto';
 
@@ -29,7 +29,7 @@ export class ProductService {
 		return this.productRepository.deleteProduct(id);
 	}
 
-	async getProductsByCategory(category: string): Promise<IDisplayProduct[]> {
-		return this.productRepository.getProductsByCategory(category);
+	async getProductsByCategory(alias: string): Promise<IDisplayProduct[]> {
+		return this.productRepository.getProductsByCategory(alias);
 	}
 }

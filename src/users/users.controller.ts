@@ -1,8 +1,6 @@
 import { Controller, Get, Param, ParseIntPipe, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { INTERNAL_SERVER_ERROR } from '../common/crud.constants';
-import { IDisplayUser } from './interfaces/display-user.interface';
-import { UserSchema } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {

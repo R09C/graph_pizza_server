@@ -4,17 +4,22 @@ import {
 	ProductSchema,
 	SizeSchema,
 	UnitSchema,
+	PictureSchema,
 } from '@prisma/client';
-import { IDisplayProduct } from '../products/interface/product.display.interface';
+import { IDisplayProduct } from '../products/interfaces/display-product.interface';
 import { IDisplayIngredient } from '../ingredient/interfaces/display-ingredient.interface';
 import { IngredientEntity } from './ingredient.entity';
 import { CharacteristicEntity } from './characteristic.entity';
 import { IDisplayCharacteristic } from '../characteristic/interfaces/display-characteristic.interface';
+import { IDisplayPicture } from '../pictures/interfaces/display-picture.interface';
+import { PictureEntity } from './picture.entity';
+import { createProductEntityType } from './types/create-product-entity.type';
 
 export class ProductEntity {
 	private readonly _id: number;
 	private readonly _name: string;
 	private readonly _categoryId: number;
+	private readonly _picture: IDisplayPicture;
 	private readonly _ingredients: IDisplayIngredient[];
 	private readonly _characteristics: IDisplayCharacteristic[];
 
@@ -24,15 +29,12 @@ export class ProductEntity {
 		categoryId,
 		ingredients,
 		characteristics,
-	}: ProductSchema & {
-		ingredients?: { ingredient: IngredientSchema }[];
-		characteristics?: {
-			characteristic: CharacteristicSchema & { size: SizeSchema & { unit: UnitSchema } };
-		}[];
-	}) {
+		picture,
+	}: createProductEntityType) {
 		this._id = id;
 		this._name = name;
 		this._categoryId = categoryId;
+		this._picture = picture ? new PictureEntity(picture).getDisplay() : null;
 		this._ingredients = ingredients?.map((ingredient) =>
 			new IngredientEntity(ingredient.ingredient).getDisplay(),
 		);
@@ -57,6 +59,8 @@ export class ProductEntity {
 		return {
 			id: this._id,
 			name: this._name,
+			categoryId: this._categoryId,
+			picture: this._picture,
 			ingredients: this._ingredients,
 			characteristics: this._characteristics,
 		};

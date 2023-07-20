@@ -1,4 +1,4 @@
-import { IsArray, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString, ValidateIf } from 'class-validator';
 
 export class ProductUpdateDto {
 	@IsNumber()
@@ -6,6 +6,10 @@ export class ProductUpdateDto {
 
 	@IsString()
 	name: string;
+
+	@IsNumber()
+	@ValidateIf((object, value) => value !== null)
+	pictureId?: number;
 
 	@IsNumber()
 	categoryId: number;

@@ -1,4 +1,4 @@
-import { IsArray, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString, ValidateIf } from 'class-validator';
 
 export class ProductCreateDto {
 	@IsString()
@@ -6,6 +6,10 @@ export class ProductCreateDto {
 
 	@IsNumber()
 	categoryId: number;
+
+	@IsNumber()
+	@ValidateIf((object, value) => value !== null)
+	pictureId?: number;
 
 	@IsArray()
 	ingredients: number[];

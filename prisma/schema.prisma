@@ -38,13 +38,14 @@ model UserOnRolesSchema {
 }
 
 model ProductSchema {
-  id              Int                             @id @default(autoincrement())
-  name            String                          @unique
-  ingredients     ProductOnIngredientsSchema[]
-  category        CategorySchema                  @relation(fields: [categoryId], references: [id])
-  categoryId      Int
-  characteristics ProductOnCharacteristicSchema[]
-
+  id               Int                             @id @default(autoincrement())
+  name             String                          @unique
+  ingredients      ProductOnIngredientsSchema[]
+  category         CategorySchema                  @relation(fields: [categoryId], references: [id])
+  categoryId       Int
+  characteristics  ProductOnCharacteristicSchema[]
+  picture          PictureSchema?                  @relation(fields: [pictureId], references: [id])
+  pictureId        Int?
   @@map("product")
 }
 
@@ -111,4 +112,13 @@ model ProductOnIngredientsSchema {
 
   @@id([productId, ingredientId])
   @@map("product_ingredients")
+}
+
+model PictureSchema {
+  id        Int               @id @default(autoincrement())
+  name      String
+  link      String
+  products  ProductSchema[]
+
+  @@map("pictures")
 }
