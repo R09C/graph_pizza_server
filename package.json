@@ -31,6 +31,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/serve-static": "^4.0.0",
     "@prisma/client": "^4.16.2",
     "@types/app-root-path": "^1.2.5",
     "@types/fs-extra": "^11.0.1",

@@ -12,11 +12,18 @@ import { FactoryModule } from './factory/factory.module';
 import { CharacteristicModule } from './characteristic/characteristic.module';
 import { SizesModule } from './sizes/size.module';
 import { PicturesModule } from './pictures/pictures.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { path } from 'app-root-path';
+console.log(join(path, 'static'));
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			envFilePath: `.env.${process.env.NODE_ENV}`,
+		}),
+		ServeStaticModule.forRoot({
+			rootPath: join(path, 'static'),
 		}),
 		PrismaModule,
 		UsersModule,
