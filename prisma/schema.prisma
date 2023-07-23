@@ -15,6 +15,7 @@ model UserSchema {
   email    String              @unique
   password String
   roles    UserOnRolesSchema[]
+  cart     CartItemsSchema?
 
   @@map("users")
 }
@@ -38,14 +39,16 @@ model UserOnRolesSchema {
 }
 
 model ProductSchema {
-  id               Int                             @id @default(autoincrement())
-  name             String                          @unique
-  ingredients      ProductOnIngredientsSchema[]
-  category         CategorySchema                  @relation(fields: [categoryId], references: [id])
-  categoryId       Int
-  characteristics  ProductOnCharacteristicSchema[]
-  picture          PictureSchema?                  @relation(fields: [pictureId], references: [id])
-  pictureId        Int?
+  id              Int                             @id @default(autoincrement())
+  name            String                          @unique
+  ingredients     ProductOnIngredientsSchema[]
+  category        CategorySchema                  @relation(fields: [categoryId], references: [id])
+  categoryId      Int
+  characteristics ProductOnCharacteristicSchema[]
+  picture         PictureSchema?                  @relation(fields: [pictureId], references: [id])
+  pictureId       Int?
+  cartItems       CartItemsSchema[]
+
   @@map("product")
 }
 
@@ -60,11 +63,12 @@ model ProductOnCharacteristicSchema {
 }
 
 model CharacteristicSchema {
-  id       Int                             @id @default(autoincrement())
-  price    Int
-  size     SizeSchema?                     @relation(fields: [sizeId], references: [id])
-  sizeId   Int?
-  products ProductOnCharacteristicSchema[]
+  id        Int                             @id @default(autoincrement())
+  price     Int
+  size      SizeSchema?                     @relation(fields: [sizeId], references: [id])
+  sizeId    Int?
+  products  ProductOnCharacteristicSchema[]
+  cartItems CartItemsSchema[]
 
   @@map("characteristics")
 }
@@ -115,10 +119,22 @@ model ProductOnIngredientsSchema {
 }
 
 model PictureSchema {
-  id        Int               @id @default(autoincrement())
-  name      String
-  link      String
-  products  ProductSchema[]
+  id       Int             @id @default(autoincrement())
+  name     String
+  link     String
+  products ProductSchema[]
 
   @@map("pictures")
+}
+
+model CartItemsSchema {
+  id               Int                  @id @default(autoincrement())
+  user             UserSchema           @relation(fields: [userId], references: [id])
+  userId           Int                  @unique
+  characteristic   CharacteristicSchema @relation(fields: [characteristicId], references: [id])
+  characteristicId Int
+  product          ProductSchema        @relation(fields: [productId], references: [id])
+  productId        Int
+
+  @@map("cart")
 }
