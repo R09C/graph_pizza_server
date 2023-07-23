@@ -12,6 +12,7 @@ import { FactoryModule } from './factory/factory.module';
 import { CharacteristicModule } from './characteristic/characteristic.module';
 import { SizesModule } from './sizes/size.module';
 import { PicturesModule } from './pictures/pictures.module';
+import { CartModule } from './cart/cartItems.module';
 
 @Module({
 	imports: [
@@ -29,6 +30,7 @@ import { PicturesModule } from './pictures/pictures.module';
 		CharacteristicModule,
 		SizesModule,
 		PicturesModule,
+		CartModule,
 	],
 	controllers: [],
 	providers: [],

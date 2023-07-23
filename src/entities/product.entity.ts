@@ -55,6 +55,8 @@ export class ProductEntity {
 		return this._ingredients;
 	}
 
+	
+
 	getDisplay(): IDisplayProduct {
 		return {
 			id: this._id,
