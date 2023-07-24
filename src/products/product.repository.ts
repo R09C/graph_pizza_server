@@ -7,6 +7,7 @@ import { ProductFactory } from '../factory/factories/product.factory';
 import { ProductCreateDto } from './dtos/product-create.dto';
 import { ProductUpdateDto } from './dtos/product-update.dto';
 import { defaultIncludeProductsQuery } from './helpers/default-include.products';
+import { includeToCartProductsQuery } from './helpers/include-to-cart.products';
 
 @Injectable()
 export class ProductRepository {

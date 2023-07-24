@@ -14,14 +14,15 @@ import { IDisplayCharacteristic } from '../characteristic/interfaces/display-cha
 import { IDisplayPicture } from '../pictures/interfaces/display-picture.interface';
 import { PictureEntity } from './picture.entity';
 import { createProductEntityType } from './types/create-product-entity.type';
+import { IProductToCart } from '../products/interfaces/product-to-cart.interface';
 
 export class ProductEntity {
 	private readonly _id: number;
 	private readonly _name: string;
 	private readonly _categoryId: number;
 	private readonly _picture: IDisplayPicture;
-	private readonly _ingredients: IDisplayIngredient[];
-	private readonly _characteristics: IDisplayCharacteristic[];
+	private readonly _ingredients?: IDisplayIngredient[];
+	private readonly _characteristics?: IDisplayCharacteristic[];
 
 	constructor({
 		id,
@@ -55,7 +56,14 @@ export class ProductEntity {
 		return this._ingredients;
 	}
 
-	
+	getProductToCart(): IProductToCart {
+		return {
+			id: this.id,
+			name: this._name,
+			categoryId: this._categoryId,
+			picture: this._picture,
+		};
+	}
 
 	getDisplay(): IDisplayProduct {
 		return {

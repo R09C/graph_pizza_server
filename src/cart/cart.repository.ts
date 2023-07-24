@@ -1,34 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { CartItemsEntity } from '../entities/cartItems.entity';
 import { PrismaService } from '../prisma/prisma.service';
-import { CartItemsSchema, ProductSchema } from '@prisma/client';
+import { CreateCartItemDto } from './dtos/create-cart-item.dto';
+import { CartItemFactory } from '../factory/factories/cart-item.factory';
 import { defaultIncludeProductsQuery } from '../products/helpers/default-include.products';
-// import { CartItemsFactory } from '../factory/factories/cartItems.factory';
+import { IDisplayCartItem } from './interfaces/display-cart-item.interface';
+import { includeToCartProductsQuery } from '../products/helpers/include-to-cart.products';
 
 @Injectable()
-export class CartItemsRepository {
+export class CartRepository {
 	constructor(
 		private readonly prismaService: PrismaService,
-		// private readonly cartItemsFactory: CartItemsFactory,
+		private readonly cartItemFactory: CartItemFactory,
 	) {}
 
-	async getProductInCart(userId) {
-		const products = await this.prismaService.cartItemsSchema.findMany({
-			where: { userId },
+	async createCartItem(data: CreateCartItemDto): Promise<IDisplayCartItem | null> {
+		const cartItem = await this.prismaService.cartItemSchema.create({
+			data,
 			include: {
-				user: false,
+				user: true,
 				product: {
-					include: {
-						picture: true,
-						ingredients: { select: { ingredient: true } },
-					},
+					include: includeToCartProductsQuery,
 				},
 				characteristic: {
 					include: { size: { include: { unit: true } } },
 				},
 			},
 		});
-		return products;
+		return this.cartItemFactory.createEntity(cartItem);
 	}
 }
 

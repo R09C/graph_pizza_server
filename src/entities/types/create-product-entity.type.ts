@@ -9,8 +9,8 @@ import {
 
 export type createProductEntityType = ProductSchema & {
 	picture?: PictureSchema;
-	ingredients: { ingredient: IngredientSchema }[];
-	characteristics: {
+	ingredients?: { ingredient: IngredientSchema }[];
+	characteristics?: {
 		characteristic: CharacteristicSchema & { size: SizeSchema & { unit: UnitSchema } };
 	}[];
 };

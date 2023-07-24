@@ -15,7 +15,7 @@ model UserSchema {
   email    String              @unique
   password String
   roles    UserOnRolesSchema[]
-  cart     CartItemsSchema?
+  cart     CartItemSchema[]
 
   @@map("users")
 }
@@ -47,7 +47,7 @@ model ProductSchema {
   characteristics ProductOnCharacteristicSchema[]
   picture         PictureSchema?                  @relation(fields: [pictureId], references: [id])
   pictureId       Int?
-  cartItems       CartItemsSchema[]
+  cartItems       CartItemSchema[]
 
   @@map("product")
 }
@@ -68,7 +68,7 @@ model CharacteristicSchema {
   size      SizeSchema?                     @relation(fields: [sizeId], references: [id])
   sizeId    Int?
   products  ProductOnCharacteristicSchema[]
-  cartItems CartItemsSchema[]
+  cartItems CartItemSchema[]
 
   @@map("characteristics")
 }
@@ -127,14 +127,14 @@ model PictureSchema {
   @@map("pictures")
 }
 
-model CartItemsSchema {
+model CartItemSchema {
   id               Int                  @id @default(autoincrement())
   user             UserSchema           @relation(fields: [userId], references: [id])
-  userId           Int                  @unique
+  userId           Int
   characteristic   CharacteristicSchema @relation(fields: [characteristicId], references: [id])
   characteristicId Int
   product          ProductSchema        @relation(fields: [productId], references: [id])
   productId        Int
 
-  @@map("cart")
+  @@map("cart_items")
 }
