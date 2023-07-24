@@ -6,6 +6,7 @@ import { CharacteristicFactory } from './characteristic.factory';
 import { SizeFactory } from './size.factory';
 import { PictureFactory } from './picture.factory';
 import { CartItemFactory } from './cart-item.factory';
+import { CartFactory } from './cart.factory';
 
 export const factories = [
 	UserFactory,
@@ -16,4 +17,5 @@ export const factories = [
 	SizeFactory,
 	PictureFactory,
 	CartItemFactory,
+	CartFactory,
 ];

@@ -5,7 +5,6 @@ import { CharacteristicSchema, SizeSchema, UnitSchema } from '@prisma/client';
 
 export type createCartItemEntityType = {
 	id: number;
-	userId: number;
 	product: createProductEntityType;
 	characteristic: CharacteristicSchema & { size: SizeSchema & { unit: UnitSchema } };
 };

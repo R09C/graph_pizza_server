@@ -16,6 +16,17 @@ export class CharacteristicService {
 		return this.characteristicRepository.getCharacteristicById(id);
 	}
 
+	async checkProductToCharacteristic(
+		productId: number,
+		characteristicId: number,
+	): Promise<boolean> {
+		const isExist = await this.characteristicRepository.checkCharacteristicToProduct(
+			productId,
+			characteristicId,
+		);
+		return !!isExist;
+	}
+
 	async createCharacteristic(dto: CharacteristicCreateDto): Promise<CharacteristicEntity> {
 		return this.characteristicRepository.createCharacteristic(dto);
 	}

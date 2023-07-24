@@ -4,6 +4,8 @@ import { CharacteristicCreateDto } from './dtos/characteristic.create.dto';
 import { CharacteristicEntity } from '../entities/characteristic.entity';
 import { CharacteristicFactory } from '../factory/factories/characteristic.factory';
 import { IDisplayCharacteristic } from './interfaces/display-characteristic.interface';
+import { CharacteristicSchema, UserSchema } from '@prisma/client';
+import { defaultIncludeCharacteristic } from './helpers/default-include.characteristic';
 
 @Injectable()
 export class CharacteristicRepository {
@@ -14,15 +16,24 @@ export class CharacteristicRepository {
 
 	async getAllCharacteristics(): Promise<IDisplayCharacteristic[]> {
 		const characteristics = await this.prismaService.characteristicSchema.findMany({
-			include: { size: { include: { unit: true } } },
+			include: defaultIncludeCharacteristic,
 		});
 		return this.characteristicFactory.createEntities(characteristics);
+	}
+
+	async checkCharacteristicToProduct(
+		productId: number,
+		characteristicId: number,
+	): Promise<CharacteristicSchema | null> {
+		return this.prismaService.characteristicSchema.findFirst({
+			where: { id: characteristicId, products: { some: { productId } } },
+		});
 	}
 
 	async getCharacteristicById(id: number): Promise<CharacteristicEntity | null> {
 		const characteristic = await this.prismaService.characteristicSchema.findFirst({
 			where: { id },
-			include: { size: { include: { unit: true } } },
+			include: defaultIncludeCharacteristic,
 		});
 		return this.characteristicFactory.createEntity(characteristic);
 	}
@@ -32,7 +43,7 @@ export class CharacteristicRepository {
 	): Promise<CharacteristicEntity | null> {
 		const characteristic = await this.prismaService.characteristicSchema.create({
 			data,
-			include: { size: { include: { unit: true } } },
+			include: defaultIncludeCharacteristic,
 		});
 		return this.characteristicFactory.createEntity(characteristic);
 	}
@@ -40,7 +51,7 @@ export class CharacteristicRepository {
 	async deleteCharacteristic(id: number): Promise<CharacteristicEntity | null> {
 		const characteristic = await this.prismaService.characteristicSchema.delete({
 			where: { id },
-			include: { size: { include: { unit: true } } },
+			include: defaultIncludeCharacteristic,
 		});
 		return this.characteristicFactory.createEntity(characteristic);
 	}
