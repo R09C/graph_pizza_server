@@ -27,6 +27,46 @@ export class CartController {
 	@UseGuards(RolesAuthGuard)
 	@Post('create')
 	async createCartItem(@User() user: IUserWithRoles, @Body() createDto: CreateCartItemDto) {
-		return this.cartService.createCartItem({ ...createDto, userId: user.id });
+		try {
+			return await this.cartService.createCartItem({ ...createDto, userId: user.id });
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Roles('USER')
+	@UseGuards(RolesAuthGuard)
+	@Delete()
+	async deleteFullCart(@User() user: IUserWithRoles) {
+		try {
+			return await this.cartService.deleteFullCartItem(user.id);
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Roles('USER')
+	@UseGuards(RolesAuthGuard)
+	@Delete('/:productId')
+	async deleteCartItem(
+		@User() user: IUserWithRoles,
+		@Param('productId', ParseIntPipe) productId: number,
+	) {
+		try {
+			return await this.cartService.deleteCartItem(user.id, productId);
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@Roles('USER')
+	@UseGuards(RolesAuthGuard)
+	@Get()
+	async getCart(@User() user: IUserWithRoles) {
+		try {
+			return await this.cartService.getFullUserCart(user.id);
+		} catch (error) {
+			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

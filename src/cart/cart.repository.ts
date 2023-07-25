@@ -17,9 +17,33 @@ export class CartRepository {
 		private readonly cartFactory: CartFactory,
 	) {}
 
-	async createCartItem(data: CreateCartItemDto): Promise<CartEntity | null> {
-		await this.prismaService.cartItemSchema.create({ data });
+	async createCartItem({
+		addIngredients,
+		...data
+	}: CreateCartItemDto): Promise<CartEntity | null> {
+		await this.prismaService.cartItemSchema.create({
+			data: {
+				...data,
+				ingredientsToAdds: {
+					create: addIngredients.map((addIngredient) => ({
+						ingredientsToAddId: addIngredient,
+					})),
+				},
+			},
+		});
 		return this.getFullUserCart(data.userId);
+	}
+
+	async deleteFullCartItem(userId: number): Promise<CartEntity | null> {
+		await this.prismaService.cartItemSchema.deleteMany({ where: { userId } });
+		return this.getFullUserCart(userId);
+	}
+
+	async deleteCartItem(userId: number, productId: number): Promise<CartEntity | null> {
+		await this.prismaService.cartItemSchema.deleteMany({
+			where: { AND: [{ userId }, { productId }] },
+		});
+		return this.getFullUserCart(userId);
 	}
 
 	async getFullUserCart(userId: number): Promise<CartEntity | null> {
@@ -28,28 +52,18 @@ export class CartRepository {
 			include: {
 				product: { include: includeToCartProductsQuery },
 				characteristic: { include: defaultIncludeCharacteristic },
+				ingredientsToAdds: {
+					select: {
+						ingredientsToAdd: {
+							select: {
+								price: true,
+								ingredient: { select: { id: true, name: true } },
+							},
+						},
+					},
+				},
 			},
 		});
 		return this.cartFactory.createEntity({ userId, items });
 	}
 }
-
-// export const defaultIncludeProductsQuery = {
-// 	picture: true,
-// 	ingredients: {
-// 		select: {
-// 			ingredient: true,
-// 		},
-// 	},
-// 	characteristics: {
-// 		include: {
-// 			characteristic: {
-// 				include: {
-// 					size: {
-// 						include: { unit: true },
-// 					},
-// 				},
-// 			},
-// 		},
-// 	},
-// };

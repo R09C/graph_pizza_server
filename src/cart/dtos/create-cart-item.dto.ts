@@ -1,4 +1,5 @@
-import { IsNumber } from 'class-validator';
+import { IsArray, IsNumber } from 'class-validator';
+import { IWithPriceIngredient } from '../../ingredient/interfaces/withPrice.ingredient.interface';
 
 export class CreateCartItemDto {
 	userId: number;
@@ -8,4 +9,7 @@ export class CreateCartItemDto {
 
 	@IsNumber()
 	characteristicId: number;
+
+	@IsArray()
+	addIngredients?: number[];
 }

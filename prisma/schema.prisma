@@ -101,9 +101,10 @@ model CategorySchema {
 }
 
 model IngredientSchema {
-  id       Int                          @id @default(autoincrement())
-  name     String                       @unique
-  products ProductOnIngredientsSchema[]
+  id                        Int                          @id @default(autoincrement())
+  name                      String                       @unique
+  products                  ProductOnIngredientsSchema[]
+  ingredientIngredientToAdd IngredientsToAddSchema?
 
   @@map("ingredient")
 }
@@ -128,13 +129,31 @@ model PictureSchema {
 }
 
 model CartItemSchema {
-  id               Int                  @id @default(autoincrement())
-  user             UserSchema           @relation(fields: [userId], references: [id])
-  userId           Int
-  characteristic   CharacteristicSchema @relation(fields: [characteristicId], references: [id])
-  characteristicId Int
-  product          ProductSchema        @relation(fields: [productId], references: [id])
-  productId        Int
+  id                Int                                @id @default(autoincrement())
+  user              UserSchema                         @relation(fields: [userId], references: [id])
+  userId            Int
+  characteristic    CharacteristicSchema               @relation(fields: [characteristicId], references: [id])
+  characteristicId  Int
+  product           ProductSchema                      @relation(fields: [productId], references: [id])
+  productId         Int
+  ingredientsToAdds CartItemOnIngredientsToAddSchema[]
 
   @@map("cart_items")
+}
+
+model IngredientsToAddSchema {
+  id           Int                                @id @default(autoincrement())
+  price        Int
+  ingredient   IngredientSchema                   @relation(fields: [ingredientId], references: [id])
+  ingredientId Int                                @unique
+  cartItems    CartItemOnIngredientsToAddSchema[]
+}
+
+model CartItemOnIngredientsToAddSchema {
+  cartItem           CartItemSchema         @relation(fields: [cartItemId], references: [id], onDelete: Cascade)
+  cartItemId         Int
+  ingredientsToAdd   IngredientsToAddSchema @relation(fields: [ingredientsToAddId], references: [id], onDelete: Cascade)
+  ingredientsToAddId Int
+
+  @@id([cartItemId, ingredientsToAddId])
 }

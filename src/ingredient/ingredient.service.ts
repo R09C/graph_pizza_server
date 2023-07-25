@@ -4,6 +4,8 @@ import { IngredientCreateDto } from './dtos/ingredient-create.dto';
 import { IngredientRepository } from './ingredient.repository';
 import { CREATE_ERROR, DELETE_ERROR, NOT_FOUND_ERROR } from '../common/crud.constants';
 import { IngredientEntity } from '../entities/ingredient.entity';
+import { IAddIngredientCreateDto } from './dtos/addIngredient-create.dto';
+import { IWithPriceIngredient } from './interfaces/withPrice.ingredient.interface';
 
 @Injectable()
 export class IngredientService {
@@ -23,5 +25,13 @@ export class IngredientService {
 
 	async deleteIngredient(id: number): Promise<IngredientEntity | null> {
 		return this.ingredientRepository.deleteIngredient(id);
+	}
+
+	async createAddIngredient(dto: IAddIngredientCreateDto): Promise<IWithPriceIngredient | null> {
+		return this.ingredientRepository.createAddIngredient(dto);
+	}
+
+	async getAddIngredients(): Promise<IWithPriceIngredient[]> {
+		return this.ingredientRepository.getAddIngredients();
 	}
 }

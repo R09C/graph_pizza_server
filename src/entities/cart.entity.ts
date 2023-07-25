@@ -14,7 +14,16 @@ export class CartEntity implements IBaseEntity {
 		this._id = Date.now();
 		this._userId = userId;
 		this._items = items.map((item) => new CartItemEntity(item));
-		this._total_price = items.reduce((acc, item) => acc + item.characteristic.price, 0);
+		this._total_price = items.reduce(
+			(acc, item) =>
+				acc +
+				item.characteristic.price +
+				item.ingredientsToAdds?.reduce(
+					(accumulator, addIngredient) => accumulator + addIngredient.ingredientsToAdd.price,
+					0,
+				),
+			0,
+		);
 	}
 
 	get id(): number {
