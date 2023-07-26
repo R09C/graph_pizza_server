@@ -5,7 +5,7 @@ import { CharacteristicEntity } from '../entities/characteristic.entity';
 import { CharacteristicFactory } from '../factory/factories/characteristic.factory';
 import { IDisplayCharacteristic } from './interfaces/display-characteristic.interface';
 import { CharacteristicSchema, UserSchema } from '@prisma/client';
-import { defaultIncludeCharacteristic } from './helpers/default-include.characteristic';
+import { defaultIncludeCharacteristicQuery } from './helpers/default-include-characteristic.query';
 
 @Injectable()
 export class CharacteristicRepository {
@@ -16,7 +16,7 @@ export class CharacteristicRepository {
 
 	async getAllCharacteristics(): Promise<IDisplayCharacteristic[]> {
 		const characteristics = await this.prismaService.characteristicSchema.findMany({
-			include: defaultIncludeCharacteristic,
+			include: defaultIncludeCharacteristicQuery,
 		});
 		return this.characteristicFactory.createEntities(characteristics);
 	}
@@ -33,7 +33,7 @@ export class CharacteristicRepository {
 	async getCharacteristicById(id: number): Promise<CharacteristicEntity | null> {
 		const characteristic = await this.prismaService.characteristicSchema.findFirst({
 			where: { id },
-			include: defaultIncludeCharacteristic,
+			include: defaultIncludeCharacteristicQuery,
 		});
 		return this.characteristicFactory.createEntity(characteristic);
 	}
@@ -43,7 +43,7 @@ export class CharacteristicRepository {
 	): Promise<CharacteristicEntity | null> {
 		const characteristic = await this.prismaService.characteristicSchema.create({
 			data,
-			include: defaultIncludeCharacteristic,
+			include: defaultIncludeCharacteristicQuery,
 		});
 		return this.characteristicFactory.createEntity(characteristic);
 	}
@@ -51,7 +51,7 @@ export class CharacteristicRepository {
 	async deleteCharacteristic(id: number): Promise<CharacteristicEntity | null> {
 		const characteristic = await this.prismaService.characteristicSchema.delete({
 			where: { id },
-			include: defaultIncludeCharacteristic,
+			include: defaultIncludeCharacteristicQuery,
 		});
 		return this.characteristicFactory.createEntity(characteristic);
 	}

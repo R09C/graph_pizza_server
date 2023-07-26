@@ -37,9 +37,9 @@ export class CartController {
 	@Roles('USER')
 	@UseGuards(RolesAuthGuard)
 	@Delete()
-	async deleteFullCart(@User() user: IUserWithRoles) {
+	async clearCart(@User() user: IUserWithRoles) {
 		try {
-			return await this.cartService.deleteFullCartItem(user.id);
+			return await this.cartService.deleteCart(user.id);
 		} catch (error) {
 			throw new HttpException(INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -47,7 +47,7 @@ export class CartController {
 
 	@Roles('USER')
 	@UseGuards(RolesAuthGuard)
-	@Delete('/:productId')
+	@Delete(':productId')
 	async deleteCartItem(
 		@User() user: IUserWithRoles,
 		@Param('productId', ParseIntPipe) productId: number,

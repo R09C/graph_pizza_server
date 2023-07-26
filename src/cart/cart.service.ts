@@ -20,8 +20,8 @@ export class CartService {
 		return this.cartRepository.createCartItem(data);
 	}
 
-	async deleteFullCartItem(userId: number): Promise<CartEntity | null> {
-		return this.cartRepository.deleteFullCartItem(userId);
+	async deleteCart(userId: number): Promise<CartEntity | null> {
+		return this.cartRepository.deleteCart(userId);
 	}
 
 	async deleteCartItem(userId: number, productId: number): Promise<CartEntity | null> {
@@ -29,6 +29,6 @@ export class CartService {
 	}
 
 	async getFullUserCart(userId: number): Promise<CartEntity | null> {
-		return this.cartRepository.deleteFullCartItem(userId);
+		return this.cartRepository.getFullUserCart(userId);
 	}
 }

@@ -18,8 +18,8 @@ export class CartEntity implements IBaseEntity {
 			(acc, item) =>
 				acc +
 				item.characteristic.price +
-				item.ingredientsToAdds?.reduce(
-					(accumulator, addIngredient) => accumulator + addIngredient.ingredientsToAdd.price,
+				item.ingredientsToAdd?.reduce(
+					(accumulator, { ingredient }) => accumulator + ingredient.price,
 					0,
 				),
 			0,

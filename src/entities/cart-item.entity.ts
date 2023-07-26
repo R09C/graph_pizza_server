@@ -12,17 +12,16 @@ export class CartItemEntity implements IBaseEntity {
 	private readonly _id: number;
 	private readonly _product: IProductToCart;
 	private readonly _characteristic: IDisplayCharacteristic;
-	private readonly _addIngredients?: IWithPriceIngredient[];
+	private readonly _ingredientsToAdd?: IWithPriceIngredient[];
 
-	constructor({ id, product, characteristic, ingredientsToAdds }: createCartItemEntityType) {
+	constructor({ id, product, characteristic, ingredientsToAdd }: createCartItemEntityType) {
 		this._id = id;
 		this._product = new ProductEntity(product).getProductToCart();
 		this._characteristic = new CharacteristicEntity(characteristic).getDisplay();
-		this._addIngredients = ingredientsToAdds?.map((addIngredient) =>
+		this._ingredientsToAdd = ingredientsToAdd?.map(({ ingredient }) =>
 			new IngredientEntity({
-				id: addIngredient.ingredientsToAdd.ingredient.id,
-				name: addIngredient.ingredientsToAdd.ingredient.name,
-				price: addIngredient.ingredientsToAdd.price,
+				...ingredient.ingredient,
+				price: ingredient.price,
 			}).getWithPrice(),
 		);
 	}
@@ -44,7 +43,7 @@ export class CartItemEntity implements IBaseEntity {
 			id: this._id,
 			product: this._product,
 			characteristic: this._characteristic,
-			addIngredients: this._addIngredients,
+			addIngredients: this._ingredientsToAdd,
 		};
 	}
 }

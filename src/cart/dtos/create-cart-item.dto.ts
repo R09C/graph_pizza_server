@@ -11,5 +11,5 @@ export class CreateCartItemDto {
 	characteristicId: number;
 
 	@IsArray()
-	addIngredients?: number[];
+	ingredientsToAdd?: number[];
 }

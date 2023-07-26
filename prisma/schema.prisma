@@ -104,7 +104,7 @@ model IngredientSchema {
   id                        Int                          @id @default(autoincrement())
   name                      String                       @unique
   products                  ProductOnIngredientsSchema[]
-  ingredientIngredientToAdd IngredientsToAddSchema?
+  ingredientToAdd           IngredientsToAddSchema?
 
   @@map("ingredient")
 }
@@ -136,7 +136,7 @@ model CartItemSchema {
   characteristicId  Int
   product           ProductSchema                      @relation(fields: [productId], references: [id])
   productId         Int
-  ingredientsToAdds CartItemOnIngredientsToAddSchema[]
+  ingredientsToAdd  CartItemOnIngredientsToAddSchema[]
 
   @@map("cart_items")
 }
@@ -147,13 +147,16 @@ model IngredientsToAddSchema {
   ingredient   IngredientSchema                   @relation(fields: [ingredientId], references: [id])
   ingredientId Int                                @unique
   cartItems    CartItemOnIngredientsToAddSchema[]
+
+  @@map("ingredients_to_add")
 }
 
 model CartItemOnIngredientsToAddSchema {
   cartItem           CartItemSchema         @relation(fields: [cartItemId], references: [id], onDelete: Cascade)
   cartItemId         Int
-  ingredientsToAdd   IngredientsToAddSchema @relation(fields: [ingredientsToAddId], references: [id], onDelete: Cascade)
-  ingredientsToAddId Int
+  ingredient         IngredientsToAddSchema @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredientId       Int
 
-  @@id([cartItemId, ingredientsToAddId])
+  @@id([cartItemId, ingredientId])
+  @@map("cart_item_ingredients_to_add")
 }

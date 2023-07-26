@@ -19,6 +19,7 @@ import { CartModule } from './cart/cart.module';
 		ConfigModule.forRoot({
 			envFilePath: `.env.${process.env.NODE_ENV}`,
 		}),
+
 		PrismaModule,
 		UsersModule,
 		AuthModule,

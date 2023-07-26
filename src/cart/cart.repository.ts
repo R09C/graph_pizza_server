@@ -7,7 +7,7 @@ import { includeToCartProductsQuery } from '../products/helpers/include-to-cart.
 import { CartFactory } from '../factory/factories/cart.factory';
 import { IDisplayCart } from './interfaces/display-cart.interface';
 import { CartEntity } from '../entities/cart.entity';
-import { defaultIncludeCharacteristic } from '../characteristic/helpers/default-include.characteristic';
+import { defaultIncludeCharacteristicQuery } from '../characteristic/helpers/default-include-characteristic.query';
 
 @Injectable()
 export class CartRepository {
@@ -18,15 +18,15 @@ export class CartRepository {
 	) {}
 
 	async createCartItem({
-		addIngredients,
+		ingredientsToAdd,
 		...data
 	}: CreateCartItemDto): Promise<CartEntity | null> {
 		await this.prismaService.cartItemSchema.create({
 			data: {
 				...data,
-				ingredientsToAdds: {
-					create: addIngredients.map((addIngredient) => ({
-						ingredientsToAddId: addIngredient,
+				ingredientsToAdd: {
+					create: ingredientsToAdd.map((ingredientId) => ({
+						ingredientId,
 					})),
 				},
 			},
@@ -34,7 +34,7 @@ export class CartRepository {
 		return this.getFullUserCart(data.userId);
 	}
 
-	async deleteFullCartItem(userId: number): Promise<CartEntity | null> {
+	async deleteCart(userId: number): Promise<CartEntity | null> {
 		await this.prismaService.cartItemSchema.deleteMany({ where: { userId } });
 		return this.getFullUserCart(userId);
 	}
@@ -51,13 +51,12 @@ export class CartRepository {
 			where: { userId },
 			include: {
 				product: { include: includeToCartProductsQuery },
-				characteristic: { include: defaultIncludeCharacteristic },
-				ingredientsToAdds: {
-					select: {
-						ingredientsToAdd: {
-							select: {
-								price: true,
-								ingredient: { select: { id: true, name: true } },
+				characteristic: { include: defaultIncludeCharacteristicQuery },
+				ingredientsToAdd: {
+					include: {
+						ingredient: {
+							include: {
+								ingredient: true,
 							},
 						},
 					},

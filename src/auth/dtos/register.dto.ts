@@ -6,6 +6,6 @@ export class RegisterDto {
 	readonly email: string;
 
 	@IsNotEmpty()
-	@Length(6, 24)
+	@Length(5, 24)
 	readonly password: string;
 }

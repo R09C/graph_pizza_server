@@ -14,7 +14,5 @@ export type createCartItemEntityType = {
 	id: number;
 	product: createProductEntityType;
 	characteristic: CharacteristicSchema & { size: SizeSchema & { unit: UnitSchema } };
-	ingredientsToAdds: {
-		ingredientsToAdd: { price: number; ingredient: { id: number; name: string } };
-	}[];
+	ingredientsToAdd: { ingredient: { price: number; ingredient: IngredientSchema } }[];
 };
